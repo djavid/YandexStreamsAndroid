@@ -10,6 +10,11 @@ public abstract class BasePresenter<V extends View, R extends Router, I> impleme
     private I instanceState;
     private String id;
 
+    public BasePresenter(V view, R router) {
+        this.view = view;
+        this.router = router;
+    }
+
     public abstract void onStart();
 
     public abstract void onStop();
@@ -30,5 +35,12 @@ public abstract class BasePresenter<V extends View, R extends Router, I> impleme
 
     public void setRouter(R router) {
         this.router = router;
+    }
+
+    protected I getInstanceState(){
+        return instanceState;
+    }
+    protected void setInstanceState(I instanceState){
+        this.instanceState=instanceState;
     }
 }

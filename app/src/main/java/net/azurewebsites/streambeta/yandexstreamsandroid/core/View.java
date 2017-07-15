@@ -5,4 +5,7 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.core;
  */
 
 public interface View {
+    void showProgressbar();
+    void hideProgressbar();
+    void dispose();
 }

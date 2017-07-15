@@ -1,4 +1,4 @@
-package net.azurewebsites.streambeta.yandexstreamsandroid.domain;
+package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,10 +8,14 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.MainPresenter;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.MainView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainView{
 
     private TextView mTextMessage;
+
+    private MainPresenter presenter;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -39,8 +43,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
+
+    @Override
+    public void showProgressbar() {
+
+    }
+
+    @Override
+    public void hideProgressbar() {
+
+    }
+
+    @Override
+    public void dispose() {
+
     }
 }
