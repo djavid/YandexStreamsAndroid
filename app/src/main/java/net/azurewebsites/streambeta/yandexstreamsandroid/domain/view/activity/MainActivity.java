@@ -9,9 +9,11 @@ import android.widget.TextView;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.MainPresenter;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.ScreenTag;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.MainView;
 
-public class MainActivity extends AppCompatActivity implements MainView{
+public class MainActivity extends AppCompatActivity implements MainView, MainRouter{
 
     private TextView mTextMessage;
 
@@ -62,5 +64,20 @@ public class MainActivity extends AppCompatActivity implements MainView{
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public void goBack() {
+
+    }
+
+    @Override
+    public void goToScreen(ScreenTag screenTag) {
+
+    }
+
+    @Override
+    public ScreenTag getCurrentScreen() {
+        return null;
     }
 }
