@@ -32,14 +32,14 @@ public class App extends Application {
     }
 
     public static PresenterProvider getPresenterProvider() {
-        if (presenterProvider==null)
-            presenterProvider=new PresenterProvider();
+        if (presenterProvider == null)
+            presenterProvider = new PresenterProvider();
         return presenterProvider;
     }
 
     public static SharedPreferences getSharedPreferences() {
-        if (sharedPreferences==null)
-            sharedPreferences=getContext().getSharedPreferences(SHARED_PREFERENCES_CODE,0);
+        if (sharedPreferences == null)
+            sharedPreferences = getContext().getSharedPreferences(SHARED_PREFERENCES_CODE, 0);
         return sharedPreferences;
     }
 }

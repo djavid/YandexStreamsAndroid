@@ -1,21 +1,32 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.activity;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.MainPresenter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.ScreenTag;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.GamecodeFragment;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.ProfileFragment;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.SearchFragment;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.dummy.DummyContent;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.MainView;
 
-public class MainActivity extends AppCompatActivity implements MainView, MainRouter{
 
-    private TextView mTextMessage;
+public class MainActivity extends AppCompatActivity implements MainView, MainRouter,
+        SearchFragment.OnListFragmentInteractionListener, GamecodeFragment.OnFragmentInteractionListener,
+        ProfileFragment.OnFragmentInteractionListener{
+
+    final FragmentManager fragmentManager = getFragmentManager();
+    Fragment searchFragment, gamecodeFragment, profileFragment;
 
     private MainPresenter presenter;
 
@@ -24,15 +35,27 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            final FragmentTransaction transaction = fragmentManager.beginTransaction();
+
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                case R.id.navigation_search:
+
+                    transaction.replace(R.id.content, searchFragment);
+                    transaction.commit();
+
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.navigation_gamecode:
+
+                    transaction.replace(R.id.content, gamecodeFragment);
+                    transaction.commit();
+
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                case R.id.navigation_profile:
+
+                    transaction.replace(R.id.content, profileFragment);
+                    transaction.commit();
+
                     return true;
             }
             return false;
@@ -45,10 +68,14 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        searchFragment = SearchFragment.newInstance(1);
+        gamecodeFragment = GamecodeFragment.newInstance();
+        profileFragment = ProfileFragment.newInstance();
 
-        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.navigation_search);
+
     }
 
     @Override
@@ -80,4 +107,15 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     public ScreenTag getCurrentScreen() {
         return null;
     }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
 }

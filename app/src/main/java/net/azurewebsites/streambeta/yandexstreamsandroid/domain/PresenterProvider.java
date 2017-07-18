@@ -15,15 +15,17 @@ public class PresenterProvider {
         createPresenter(presenterId);
         return c.cast(presenterMap.get(presenterId));
     }
-    private void createPresenter(String presenterId){
-        if(presenterMap.containsKey(presenterId))
+
+    private void createPresenter(String presenterId) {
+        if (presenterMap.containsKey(presenterId))
             return;
-        switch (presenterId){
+        switch (presenterId) {
             //presenter id to class logic
         }
     }
-    public void removePresenter(String presenterId){
-        if(presenterMap.containsKey(presenterId))
+
+    public void removePresenter(String presenterId) {
+        if (presenterMap.containsKey(presenterId))
             presenterMap.remove(presenterId);
     }
 }

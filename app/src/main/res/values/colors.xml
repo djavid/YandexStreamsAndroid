@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#29292c</color>
+    <color name="colorPrimaryDark">#29292c</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorNavIconSelected">#29292c</color>
+    <color name="colorNavIconDefault">#989898</color>
+
+    <color name="colorItemSelected">#f3c647</color>
+    <color name="colorItemDefault">#29292c</color>
 </resources>
