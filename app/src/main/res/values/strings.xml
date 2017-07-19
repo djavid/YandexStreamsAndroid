@@ -6,4 +6,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Toolbar -->
+    <string name="toolbar_search_hint">ПОИСК</string>
+    <string name="toolbar_subscribes_textview">Мои подписки</string>
 </resources>

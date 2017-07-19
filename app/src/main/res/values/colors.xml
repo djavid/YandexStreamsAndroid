@@ -9,4 +9,13 @@
 
     <color name="colorItemSelected">#f3c647</color>
     <color name="colorItemDefault">#29292c</color>
+
+    <color name="colorListText">#979797</color>
+
+    <!--toolbar-->
+    <color name="colorToolbarBackground">#29292c</color>
+    <color name="colorToolbarSearchBorder">#979797</color>
+    <color name="colorToolbarBottomLine">#f3c647</color>
+    <color name="colorToolbarSubscribesTextView">#f3c647</color>
+    <color name="colorToolbarIcon">#979797</color>
 </resources>

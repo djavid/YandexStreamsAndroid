@@ -8,6 +8,8 @@
     android:orientation="vertical"
     tools:context="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.activity.MainActivity">
 
+    <include layout="@layout/toolbar" />
+
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
@@ -22,9 +24,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/colorPrimary"
+
         app:itemIconTint="@drawable/selector_icon"
         app:itemTextColor="@drawable/selector_icon"
         app:itemBackground="@drawable/selector_item_background"
+        fontPath="minecraft-rus.ttf"
         app:menu="@menu/navigation" />
 
 </LinearLayout>
