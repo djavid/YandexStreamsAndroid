@@ -4,6 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -18,11 +19,19 @@
         <!-- цвет дорожки для активного состояния -->
         <item name="trackTint">#f3c647</item>
 
+        <!-- #c5c5c5 -->
+
         <!-- неактивное состояние -->
         <!--<item name="colorSwitchThumbNormal"></item>-->
         <!-- цвет дорожки для неактивного состояния -->
         <!--<item name="android:colorForeground">@android:color/darker_gray</item>-->
 
+    </style>
+
+    <style name="EdittextDonate" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/colorDonateEdittext</item>
+        <item name="colorControlActivated">@color/colorDonateEdittext</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
 </resources>

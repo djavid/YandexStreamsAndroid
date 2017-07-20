@@ -1,0 +1,281 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingPrefix, ContentDescription"
+    tools:context="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.DonateFragment"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_toolbar_donate"
+        android:layout_width="match_parent"
+        android:layout_height="182dp"
+        android:background="@drawable/hova">
+
+        <View
+            android:id="@+id/v_toolbar_line"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorToolbarBottomLine"/>
+
+        <TextView
+            android:id="@+id/tv_donate_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/v_toolbar_line"
+            android:textSize="24sp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginBottom="6dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorToolbarName"
+            android:text="Я — НЕ ЛЕГЕНДА (ПОКА ЕЩЁ)"
+            fontPath="minecraft.ttf"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="35dp">
+        
+        <RelativeLayout
+            android:id="@+id/rl_donate_nick"
+            android:layout_width="match_parent"
+            android:layout_height="30.3dp">
+
+            <EditText
+                android:id="@+id/et_donate_nick"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="9dp"
+                android:theme="@style/EdittextDonate"
+                android:background="@null"
+                android:textSize="21.3sp"
+                android:textColor="@color/colorDonateEdittext"
+                android:inputType="text"
+                android:maxLines="1"
+                fontPath="minecraft.ttf"/>
+
+            <TextView
+                android:id="@+id/tv_donate_hint_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3.4dp"
+                android:layout_marginStart="3.4dp"
+                android:layout_marginBottom="9dp"
+                android:textSize="21.3sp"
+                android:textColor="@color/colorDonateEdittext"
+                android:text="@string/title_donate_edittext_nick"
+                fontPath="minecraft.ttf"
+                />
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2.7dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorDonateEdittext" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_donate_value"
+            android:layout_width="match_parent"
+            android:layout_height="30.3dp"
+            android:layout_below="@id/rl_donate_nick"
+            android:layout_marginTop="30dp"
+            >
+
+            <EditText
+                android:id="@+id/et_donate_value"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="9dp"
+                android:theme="@style/EdittextDonate"
+                android:background="@null"
+                android:textSize="21.3sp"
+                android:textColor="@color/colorDonateEdittext"
+                android:inputType="text"
+                android:maxLines="1"
+                fontPath="minecraft.ttf"/>
+
+            <TextView
+                android:id="@+id/tv_donate_hint_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3.4dp"
+                android:layout_marginStart="3.4dp"
+                android:layout_marginBottom="9dp"
+                android:textSize="21.3sp"
+                android:textColor="@color/colorDonateEdittext"
+                android:text="@string/title_donate_edittext_value"
+                fontPath="minecraft.ttf"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2.7dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorDonateEdittext" />
+
+        </RelativeLayout>
+
+        <info.hoang8f.android.segmented.SegmentedGroup
+            xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/segmented_button_donate"
+            android:layout_width="match_parent"
+            android:layout_height="48.2dp"
+            android:layout_below="@id/rl_donate_value"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            segmentedgroup:sc_checked_text_color="@color/colorDonateButtonTextActive"
+            segmentedgroup:sc_tint_color="@color/colorDonateButtonBg"
+            segmentedgroup:sc_border_width="2dp"
+            segmentedgroup:sc_corner_radius="10dp">
+
+            <RadioButton
+                android:id="@+id/btn_text_donate"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="21.3sp"
+                android:checked="true"
+                android:background="@color/colorDonateButtonBg"
+                android:text="@string/title_donate_button_text"
+                style="@style/RadioButton"
+                fontPath="minecraft.ttf" />
+
+            <RadioButton
+                android:id="@+id/btn_audio_donate"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="21.3sp"
+                android:text="@string/title_donate_button_audio"
+                style="@style/RadioButton"
+                fontPath="minecraft.ttf" />
+
+        </info.hoang8f.android.segmented.SegmentedGroup>
+
+        <RelativeLayout
+            android:id="@+id/rl_donate_block"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_below="@id/segmented_button_donate"
+            android:layout_marginTop="30dp"
+            >
+
+            <RelativeLayout
+                android:id="@+id/rl_donate_text"
+                android:layout_width="match_parent"
+                android:layout_height="30.3dp"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/et_donate_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="9dp"
+                    android:theme="@style/EdittextDonate"
+                    android:background="@null"
+                    android:textSize="21.3sp"
+                    android:textColor="@color/colorDonateEdittext"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    fontPath="minecraft.ttf"/>
+
+                <TextView
+                    android:id="@+id/tv_donate_hint_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3.4dp"
+                    android:layout_marginStart="3.4dp"
+                    android:layout_marginBottom="9dp"
+                    android:textSize="21.3sp"
+                    android:textColor="@color/colorDonateEdittext"
+                    android:text="@string/title_donate_edittext_text"
+                    fontPath="minecraft.ttf" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2.7dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorDonateEdittext" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_donate_audio"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_donate_audio"
+                    android:layout_width="55.3dp"
+                    android:layout_height="55.3dp"
+                    android:src="@drawable/audio" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="23.7dp"
+                    android:layout_marginStart="23.7dp"
+                    android:layout_toRightOf="@id/iv_donate_audio"
+                    android:layout_toEndOf="@id/iv_donate_audio"
+                    android:orientation="vertical"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:id="@+id/tv_audio_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="21.3sp"
+                        android:text="@string/title_donate_description_audio"
+                        fontPath="minecraft.ttf" />
+
+                    <TextView
+                        android:id="@+id/tv_audio_duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textSize="21.3sp"
+                        android:text="01:30"
+                        fontPath="minecraft.ttf" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_donate_cancel_audio"
+                    android:layout_width="27.3dp"
+                    android:layout_height="27.3dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    app:srcCompat="@drawable/ic_close" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_submit_donate"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/shape_submit_button"
+        android:text="@string/title_donate_submit_button"
+        android:textSize="21.3dp"
+        android:textColor="@color/colorDonateButtonTextActive"
+        fontPath="minecraft.ttf" />
+
+</LinearLayout>

@@ -9,11 +9,20 @@
     <!-- Search fragment -->
     <string name="title_search_toolbar_hint">ПОИСК</string>
     <string name="title_search_toolbar">Мои подписки</string>
-    
+
     <!-- Profile fragment -->
     <string name="title_profile_toolbar">Мой профиль</string>
     <string name="title_profile_history">История</string>
     <string name="title_profile_manage">Управление</string>
     <string name="title_profile_notification">Уведомления</string>
+
+    <!-- Donate fragment -->
+    <string name="title_donate_edittext_nick">Введите никнейм</string>
+    <string name="title_donate_edittext_value">Сумма доната</string>
+    <string name="title_donate_edittext_text">Текст сообщения</string>
+    <string name="title_donate_button_text">Текст</string>
+    <string name="title_donate_button_audio">Аудио</string>
+    <string name="title_donate_description_audio">Запись аудио</string>
+    <string name="title_donate_submit_button">Отправить</string>
 
 </resources>

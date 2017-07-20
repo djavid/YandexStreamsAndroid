@@ -23,4 +23,10 @@
     <!-- Profile fragment -->
     <color name="colorProfileLinks">#979797</color>
 
+    <!-- Donate fragment -->
+    <color name="colorDonateEdittext">#979797</color>
+    <color name="colorDonateButtonBg">#f3c647</color>
+    <color name="colorDonateButtonTextActive">#29292c</color>
+    <color name="colorDonateButtonTextInactive">#979797</color>
+
 </resources>

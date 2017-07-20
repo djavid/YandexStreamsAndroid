@@ -56,7 +56,7 @@ dependencies {
 
     compile 'com.squareup.okhttp3:okhttp:3.8.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
-    
+
     // dagger2
     /*compile 'com.google.dagger:dagger:2.8'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.8'*/
@@ -72,4 +72,7 @@ dependencies {
 
     //yandex.pay api
     compile 'com.yandex.money.api:yandex-money-sdk-android:4.0.4'
+
+    //segmented buttons
+    compile 'info.hoang8f:android-segmented:1.0.6'
 }

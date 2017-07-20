@@ -17,6 +17,7 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.StreamMode
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.MainPresenter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.ScreenTag;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.DonateFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.GamecodeFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.ProfileFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.SearchFragment;
@@ -29,7 +30,7 @@ import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 public class MainActivity extends AppCompatActivity implements MainView, MainRouter,
         SearchFragment.OnListFragmentInteractionListener, GamecodeFragment.OnFragmentInteractionListener,
-        ProfileFragment.OnFragmentInteractionListener{
+        ProfileFragment.OnFragmentInteractionListener, DonateFragment.OnFragmentInteractionListener {
 
     final FragmentManager fragmentManager = getFragmentManager();
     Fragment searchFragment, gamecodeFragment, profileFragment;
@@ -133,8 +134,15 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     }
 
     @Override
-    public void onListFragmentInteraction(StreamModel item) {
+    public void onListFragmentInteraction(StreamModel model) {
+        System.out.println(model.getName());
 
+        Fragment donateFragment = DonateFragment.newInstance(model);
+
+        final FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.content, donateFragment);
+        transaction.addToBackStack("donateFragment");
+        transaction.commit();
     }
 
     @Override

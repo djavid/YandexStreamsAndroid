@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingPrefix"
+    tools:ignore="MissingPrefix, ContentDescription"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -109,8 +109,6 @@
         android:name="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.SubscribeFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.SearchFragment"
         tools:listitem="@layout/fragment_search" />
