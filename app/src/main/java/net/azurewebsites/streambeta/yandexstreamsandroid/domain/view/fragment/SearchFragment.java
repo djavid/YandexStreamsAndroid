@@ -1,30 +1,22 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.dummy.DummyContent;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.dummy.DummyContent.DummyItem;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.StreamModel;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class SearchFragment extends Fragment {
 
     // TODO: Customize parameter argument names
@@ -37,8 +29,7 @@ public class SearchFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public SearchFragment() {
-    }
+    public SearchFragment() { }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
@@ -65,19 +56,27 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search_list, container, false);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
+//        if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_search_fragment);
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MySearchRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-        }
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.custom_toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            List<StreamModel> items = new ArrayList<>();
+            items.add(new StreamModel(0, "", "Grimmmz", "Join the bald dota ...", "290 058 зрителей"));
+            items.add(new StreamModel(0, "", "AdmiralBulldog", "[A] @admiralbulldo…", "75 669 Зрителей"));
+            items.add(new StreamModel(0, "", "MidOne", "1, 2, 3 headshot kills", "49 935 Подписчик"));
+            items.add(new StreamModel(0, "", "Naded", "Matchmaking! | Me…", "443 Зрителя"));
+            items.add(new StreamModel(0, "", "snake_nade", "Pro Rainbow6Sie…", "114 Зрителей"));
+
+            recyclerView.setAdapter(new MySearchRecyclerViewAdapter(items, mListener));
+//        }
+
+//        Toolbar toolbar = (Toolbar) view.findViewById(R.id.search_toolbar);
+//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         return view;
     }
@@ -111,7 +110,6 @@ public class SearchFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(StreamModel item);
     }
 }

@@ -1,13 +1,19 @@
 <resources>
     <string name="app_name">YandexStreamsAndroid</string>
+
+    <!-- Bottom navigation view -->
     <string name="title_search">ПОИСК</string>
     <string name="title_gamecode">ГЕЙМКОД</string>
     <string name="title_profile">ПРОФИЛЬ</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Search fragment -->
+    <string name="title_search_toolbar_hint">ПОИСК</string>
+    <string name="title_search_toolbar">Мои подписки</string>
+    
+    <!-- Profile fragment -->
+    <string name="title_profile_toolbar">Мой профиль</string>
+    <string name="title_profile_history">История</string>
+    <string name="title_profile_manage">Управление</string>
+    <string name="title_profile_notification">Уведомления</string>
 
-    <!-- Toolbar -->
-    <string name="toolbar_search_hint">ПОИСК</string>
-    <string name="toolbar_subscribes_textview">Мои подписки</string>
 </resources>

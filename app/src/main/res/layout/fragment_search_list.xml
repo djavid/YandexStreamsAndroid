@@ -1,14 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
-    android:name="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.SubscribeFragment"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingPrefix"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    app:layoutManager="LinearLayoutManager"
-    tools:context="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.SearchFragment"
-    tools:listitem="@layout/fragment_search" />
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_toolbar_search"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/colorToolbarBackground">
+
+        <View
+            android:id="@+id/v_toolbar_line"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorToolbarBottomLine"/>
+
+        <TextView
+            android:id="@+id/tv_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/v_toolbar_line"
+            android:textSize="24sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="6dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorToolbarName"
+            fontPath="minecraft.ttf"
+            android:text="@string/title_search_toolbar"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/tv_toolbar"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/rl_search"
+                android:layout_width="267dp"
+                android:layout_height="48dp"
+                android:background="@drawable/searchview_drawable">
+
+                <ImageView
+                    android:id="@+id/iv_search_icon"
+                    android:layout_width="30.7dp"
+                    android:layout_height="30.7dp"
+                    android:tint="@color/colorToolbarIcon"
+                    android:layout_marginLeft="67.3dp"
+                    android:layout_marginStart="67.3dp"
+                    android:layout_centerVertical="true"
+                    app:srcCompat="@drawable/ic_zoom"/>
+
+                <TextView
+                    android:id="@+id/tv_search_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iv_search_icon"
+                    android:layout_toEndOf="@id/iv_search_icon"
+                    android:layout_marginLeft="13.3dp"
+                    android:layout_marginStart="13.3dp"
+                    android:layout_centerVertical="true"
+                    fontPath="minecraft.ttf"
+                    android:textSize="21.3sp"
+                    android:textColor="@color/colorToolbarIcon"
+                    android:text="@string/title_search_toolbar_hint" />
+
+                <EditText
+                    android:id="@+id/et_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingEnd="20dp"
+                    fontPath="minecraft.ttf"
+                    android:textSize="21.3dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="true"
+                    android:textColor="@color/colorToolbarIcon"
+                    android:background="@null"
+                    android:inputType="text" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/iv_qr_button"
+                android:layout_width="43.3dp"
+                android:layout_height="43.3dp"
+                app:srcCompat="@drawable/ic_qr_code"
+                android:tint="@color/colorToolbarIcon"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="11.3dp"
+                android:layout_marginLeft="11.3dp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_search_fragment"
+        android:name="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.SubscribeFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.SearchFragment"
+        tools:listitem="@layout/fragment_search" />
+
+
+</LinearLayout>
 

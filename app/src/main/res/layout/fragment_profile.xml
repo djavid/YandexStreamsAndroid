@@ -1,13 +1,188 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingPrefix"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/rl_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="My profile fragment" />
+        android:layout_height="182dp"
+        android:background="@color/colorToolbarBackground">
 
-</FrameLayout>
+        <View
+            android:id="@+id/v_toolbar_line"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorToolbarBottomLine"/>
+
+        <TextView
+            android:id="@+id/tv_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/v_toolbar_line"
+            android:textSize="24sp"
+            android:layout_marginBottom="6dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorToolbarName"
+            fontPath="minecraft.ttf"
+            android:text="@string/title_profile_toolbar"/>
+
+        <TextView
+            android:id="@+id/tv_toolbar_balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_toolbar"
+            android:textSize="16.7sp"
+            android:layout_marginBottom="6dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorToolbarBalance"
+            fontPath="minecraft.ttf"
+            android:text="3 467.00 р." />
+
+        <ImageView
+            android:id="@+id/iv_toolbar_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_toolbar_balance"
+            android:layout_marginBottom="6dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ava" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="28.3dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="43.3dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_icon_history"
+                android:layout_width="43.3dp"
+                android:layout_height="43.3dp"
+                android:tint="@color/colorProfileLinks"
+                app:srcCompat="@drawable/ic_clock"/>
+
+            <TextView
+                android:id="@+id/tv_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_icon_history"
+                android:layout_toEndOf="@id/iv_icon_history"
+                android:layout_marginLeft="22dp"
+                android:layout_marginStart="22dp"
+                android:layout_centerVertical="true"
+                android:textSize="21.3sp"
+                android:textColor="@color/colorProfileLinks"
+                fontPath="minecraft.ttf"
+                android:text="@string/title_profile_history" />
+            
+            <ImageView
+                android:layout_width="22.2dp"
+                android:layout_height="22.2dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/forward" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="43.3dp"
+            android:layout_marginTop="27dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_icon_manage"
+                android:layout_width="43.3dp"
+                android:layout_height="43.3dp"
+                android:tint="@color/colorProfileLinks"
+                app:srcCompat="@drawable/ic_settings"/>
+
+            <TextView
+                android:id="@+id/tv_manage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_icon_manage"
+                android:layout_toEndOf="@id/iv_icon_manage"
+                android:layout_marginLeft="22dp"
+                android:layout_marginStart="22dp"
+                android:layout_centerVertical="true"
+                android:textSize="21.3sp"
+                android:textColor="@color/colorProfileLinks"
+                fontPath="minecraft.ttf"
+                android:text="@string/title_profile_manage" />
+
+            <ImageView
+                android:layout_width="22.2dp"
+                android:layout_height="22.2dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/forward" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="43.3dp"
+            android:layout_marginTop="27dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_icon_notification"
+                android:layout_width="43.3dp"
+                android:layout_height="43.3dp"
+                android:tint="@color/colorProfileLinks"
+                app:srcCompat="@drawable/ic_bell"/>
+
+            <TextView
+                android:id="@+id/tv_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_icon_notification"
+                android:layout_toEndOf="@id/iv_icon_notification"
+                android:layout_marginLeft="22dp"
+                android:layout_marginStart="22dp"
+                android:layout_centerVertical="true"
+                android:textSize="21.3sp"
+                android:textColor="@color/colorProfileLinks"
+                fontPath="minecraft.ttf"
+                android:text="@string/title_profile_notification" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switch_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:checked="true"
+                android:theme="@style/SwitchProfile"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

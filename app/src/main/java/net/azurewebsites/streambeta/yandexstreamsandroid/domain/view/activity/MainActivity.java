@@ -9,24 +9,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.StreamModel;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.MainPresenter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.ScreenTag;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.GamecodeFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.ProfileFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.SearchFragment;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.dummy.DummyContent;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.MainView;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -55,18 +48,21 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
                 case R.id.navigation_search:
 
                     transaction.replace(R.id.content, searchFragment);
+                    transaction.addToBackStack("searchFragment");
                     transaction.commit();
 
                     return true;
                 case R.id.navigation_gamecode:
 
                     transaction.replace(R.id.content, gamecodeFragment);
+                    transaction.addToBackStack("gamecodeFragment");
                     transaction.commit();
 
                     return true;
                 case R.id.navigation_profile:
 
                     transaction.replace(R.id.content, profileFragment);
+                    transaction.addToBackStack("profileFragment");
                     transaction.commit();
 
                     return true;
@@ -100,6 +96,13 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        fragmentManager.popBackStack();
+    }
+
+    @Override
     public void showProgressbar() {
 
     }
@@ -130,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(StreamModel item) {
 
     }
 

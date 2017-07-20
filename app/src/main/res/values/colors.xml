@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#29292c</color>
     <color name="colorPrimaryDark">#29292c</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#f3c647</color>
 
     <color name="colorNavIconSelected">#29292c</color>
     <color name="colorNavIconDefault">#989898</color>
@@ -12,10 +12,15 @@
 
     <color name="colorListText">#979797</color>
 
-    <!--toolbar-->
+    <!-- Toolbar -->
     <color name="colorToolbarBackground">#29292c</color>
     <color name="colorToolbarSearchBorder">#979797</color>
     <color name="colorToolbarBottomLine">#f3c647</color>
-    <color name="colorToolbarSubscribesTextView">#f3c647</color>
+    <color name="colorToolbarName">#f3c647</color>
     <color name="colorToolbarIcon">#979797</color>
+    <color name="colorToolbarBalance">#979797</color>
+
+    <!-- Profile fragment -->
+    <color name="colorProfileLinks">#979797</color>
+
 </resources>

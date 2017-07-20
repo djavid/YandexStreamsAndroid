@@ -5,10 +5,24 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
+
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <!-- Customize your theme here. -->
         <item name = "android:windowActionBar">false</item>
         <item name = "android:windowNoTitle">true</item>
+    </style>
+
+    <style name="SwitchProfile" parent="Theme.AppCompat.Light">
+        <!-- активное состояние -->
+        <item name="colorControlActivated">#979797</item>
+        <!-- цвет дорожки для активного состояния -->
+        <item name="trackTint">#f3c647</item>
+
+        <!-- неактивное состояние -->
+        <!--<item name="colorSwitchThumbNormal"></item>-->
+        <!-- цвет дорожки для неактивного состояния -->
+        <!--<item name="android:colorForeground">@android:color/darker_gray</item>-->
+
     </style>
 
 </resources>

@@ -9,23 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.StreamModel;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.SearchFragment.OnListFragmentInteractionListener;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class MySearchRecyclerViewAdapter extends RecyclerView.Adapter<MySearchRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<StreamModel> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MySearchRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MySearchRecyclerViewAdapter(List<StreamModel> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -40,16 +35,16 @@ public class MySearchRecyclerViewAdapter extends RecyclerView.Adapter<MySearchRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        //holder.mName.setText(mValues.get(position).id);
-        //holder.mDescription.setText(mValues.get(position).content);
+        StreamModel stream = mValues.get(position);
+        holder.mName.setText(stream.getName());
+        holder.mDescription.setText(stream.getDescription());
+        holder.mViews.setText(stream.getAudience());
+        holder.mItem = stream;
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
@@ -63,11 +58,11 @@ public class MySearchRecyclerViewAdapter extends RecyclerView.Adapter<MySearchRe
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
+        public StreamModel mItem;
         public final ImageView mAvatar;
         public final TextView mName;
         public final TextView mDescription;
         public final TextView mViews;
-        public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -76,11 +71,16 @@ public class MySearchRecyclerViewAdapter extends RecyclerView.Adapter<MySearchRe
             mName = (TextView) view.findViewById(R.id.name);
             mDescription = (TextView) view.findViewById(R.id.description);
             mViews = (TextView) view.findViewById(R.id.views);
+            mItem = new StreamModel();
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mDescription.getText() + "'";
+            return "ViewHolder{" +
+                    "mName=" + mName +
+                    ", mDescription=" + mDescription +
+                    ", mViews=" + mViews +
+                    '}';
         }
     }
 }

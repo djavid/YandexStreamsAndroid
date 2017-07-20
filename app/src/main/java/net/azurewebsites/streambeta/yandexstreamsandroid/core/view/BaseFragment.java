@@ -23,38 +23,45 @@ public abstract class BaseFragment extends Fragment
 	@BindView(R.id.progressbar)
 	View progressbar;
 
-    private Unbinder unbinder;
+	private Unbinder unbinder;
 
 	public abstract int getLayoutId();
+
 	public abstract String getPresenterId();
+
 	public abstract View setupView(View view);
+
 	public abstract void loadData();
 
 	@Override
-	public void onCreate(Bundle savedInstanceState){
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fancy_fragment, container, false)
+		View view = inflater.inflate(getLayoutId(), container, false);
 		unbinder = ButterKnife.bind(this, view);
 		return setupView(view);
 	}
+
 	@Override
-    public void onStart(){
-        super.onStart();
-        loadData();
-    }
-    @Override
-    public void onDestroyView(){
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-	public <CustomPresenter> CustomPresenter getPresenter(Class<CustomPresenter> c){
+	public void onStart() {
+		super.onStart();
+		loadData();
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		unbinder.unbind();
+	}
+
+	public <CustomPresenter> CustomPresenter getPresenter(Class<CustomPresenter> c) {
 		return c.cast(App.getAppInstance().getPresenterProvider().getPresenter(getPresenterId(),
-			Presenter.class));
+				Presenter.class));
 	}
 
 	@Override
@@ -64,11 +71,12 @@ public abstract class BaseFragment extends Fragment
 
 	@Override
 	public void hideProgressbar() {
-        progressbar.setVisibility(View.GONE);
+		progressbar.setVisibility(View.GONE);
 	}
 
 	@Override
 	public void dispose() {
-        App.getAppInstance().getPresenterProvider().removePresenter(getPresenterId());
+		App.getAppInstance().getPresenterProvider().removePresenter(getPresenterId());
 	}
+
 }
