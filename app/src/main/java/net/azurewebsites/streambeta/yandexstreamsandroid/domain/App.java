@@ -25,6 +25,10 @@ public class App extends Application {
         getSharedPreferences();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         JodaTimeAndroid.init(this);
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+-                .setDefaultFontPath("minecraft.ttf")
+-                .setFontAttrId(R.attr.fontPath)
+-                .
     }
 
     public static Context getContext() {
