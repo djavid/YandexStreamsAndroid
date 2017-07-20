@@ -38,8 +38,9 @@ public abstract class BaseFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-		unbinder = ButterKnife.bind(this, getActivity());
-		return setupView(inflater.inflate(getLayoutId(), container, false));
+		View view = inflater.inflate(R.layout.fancy_fragment, container, false)
+		unbinder = ButterKnife.bind(this, view);
+		return setupView(view);
 	}
 	@Override
     public void onStart(){
