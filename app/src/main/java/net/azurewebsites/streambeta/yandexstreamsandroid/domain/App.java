@@ -3,13 +3,8 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.domain;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.support.v7.app.AppCompatDelegate;
-
-import net.azurewebsites.streambeta.yandexstreamsandroid.R;
 import net.danlew.android.joda.JodaTimeAndroid;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by tetawex on 12.07.17.
@@ -30,18 +25,17 @@ public class App extends Application {
         getSharedPreferences();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         JodaTimeAndroid.init(this);
-
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("minecraft.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build());
     }
 
     public static Context getContext() {
         return appInstance.getApplicationContext();
     }
 
-    public static PresenterProvider getPresenterProvider() {
+    public static App getAppInstance() {
+        return appInstance;
+    }
+
+    public PresenterProvider getPresenterProvider() {
         if (presenterProvider == null)
             presenterProvider = new PresenterProvider();
         return presenterProvider;
