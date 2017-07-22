@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.StreamModel;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamModel;
 
 import java.util.ArrayList;
 import java.util.List;

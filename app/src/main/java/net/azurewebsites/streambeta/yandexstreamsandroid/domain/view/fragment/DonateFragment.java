@@ -1,7 +1,6 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -11,9 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.StreamModel;
-
-import info.hoang8f.android.segmented.SegmentedGroup;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamModel;
 
 
 public class DonateFragment extends Fragment {

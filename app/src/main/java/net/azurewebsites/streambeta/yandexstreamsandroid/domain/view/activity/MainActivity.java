@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +14,7 @@ import android.text.SpannableStringBuilder;
 import android.view.MenuItem;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.StreamModel;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamModel;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.MainPresenter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.ScreenTag;
@@ -94,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
             title.setSpan(typefaceSpan, 0, title.length(), 0);
             menuItem.setTitle(title);
         }
+
+        //goToScreen(ScreenTag.LOGIN);
     }
 
     @Override
@@ -125,7 +128,12 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
 
     @Override
     public void goToScreen(ScreenTag screenTag) {
-
+        switch (screenTag){
+            case LOGIN:
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 
     @Override

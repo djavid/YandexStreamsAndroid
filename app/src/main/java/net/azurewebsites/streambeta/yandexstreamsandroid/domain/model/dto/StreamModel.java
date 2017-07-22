@@ -1,4 +1,4 @@
-package net.azurewebsites.streambeta.yandexstreamsandroid.domain.model;
+package net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto;
 
 /**
  * Created by djavid on 20.07.17.

@@ -1,6 +1,5 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment;
 
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.StreamModel;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamModel;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.SearchFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
