@@ -15,6 +15,9 @@ public abstract class BasePresenter<V extends View, R extends Router, I> impleme
         this.router = router;
     }
 
+    public BasePresenter() {
+    }
+
     public abstract void onStart();
 
     public abstract void onStop();

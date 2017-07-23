@@ -6,8 +6,14 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatDelegate;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.ApiInterface;
 import net.danlew.android.joda.JodaTimeAndroid;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -16,24 +22,28 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class App extends Application {
     private static App appInstance;
-    private static PresenterProvider presenterProvider;
-    private static SharedPreferences sharedPreferences;
 
-    private static String SHARED_PREFERENCES_CODE;
+    private ApiInterface apiInterface;
+    private PresenterProvider presenterProvider;
+    private SharedPreferences sharedPreferences;
+
+    public static String SHARED_PREFERENCES_CODE="yandexstreamsandroid";
+    public static String CLIENT_ID;
+
 
     @Override
     public void onCreate() {
-        super.onCreate();
-        appInstance = this;
         getPresenterProvider();
-        getSharedPreferences();
+        getPreferencesWrapper();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         JodaTimeAndroid.init(this);
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("minecraft.ttf")
                 .setFontAttrId(R.attr.fontPath)
-                .build());
+                .build());super.onCreate();
+
+        appInstance = (App)getApplicationContext();
     }
 
     public static Context getContext() {
@@ -50,9 +60,32 @@ public class App extends Application {
         return presenterProvider;
     }
 
-    public static SharedPreferences getSharedPreferences() {
-        if (sharedPreferences == null)
-            sharedPreferences = getContext().getSharedPreferences(SHARED_PREFERENCES_CODE, 0);
-        return sharedPreferences;
+    public ApiInterface getApiInterface() {
+        if (apiInterface == null)
+            apiInterface = buildApiInterface();
+        return apiInterface;
+    }
+
+    public SharedPreferences getRawPreferences() {
+        return getSharedPreferences(SHARED_PREFERENCES_CODE, MODE_PRIVATE);
+    }
+
+    public PreferencesWrapper getPreferencesWrapper() {
+        return new PreferencesWrapper(getRawPreferences());
+    }
+
+    private ApiInterface buildApiInterface() {
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        httpClient.addInterceptor(logging);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://streambeta.azurewebsites.net/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+        return retrofit.create(ApiInterface.class);
     }
 }

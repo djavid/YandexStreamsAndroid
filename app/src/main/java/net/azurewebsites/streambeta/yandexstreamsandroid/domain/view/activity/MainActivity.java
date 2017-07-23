@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
             menuItem.setTitle(title);
         }
 
-        //goToScreen(ScreenTag.LOGIN);
+        goToScreen(ScreenTag.AUTH_TWITCH);
     }
 
     @Override
@@ -117,6 +117,11 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     }
 
     @Override
+    public void showError(int errorId) {
+
+    }
+
+    @Override
     public void dispose() {
 
     }
@@ -129,10 +134,18 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     @Override
     public void goToScreen(ScreenTag screenTag) {
         switch (screenTag){
-            case LOGIN:
+            case AUTH_TWITCH: {
                 Intent intent = new Intent(this, LoginActivity.class);
+                intent.putExtra("auth_type", "twitch");
                 startActivity(intent);
                 break;
+            }
+            case AUTH_YANDEX_MONEY: {
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.putExtra("auth_type", "yandex_money");
+                startActivity(intent);
+                break;
+            }
         }
     }
 

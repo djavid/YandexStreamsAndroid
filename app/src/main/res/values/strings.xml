@@ -24,5 +24,8 @@
     <string name="title_donate_button_audio">Аудио</string>
     <string name="title_donate_description_audio">Запись аудио</string>
     <string name="title_donate_submit_button">Отправить</string>
+    <string name="err_unknown">Неизвестная ошибка</string>
+    <string name="err_network_fail">Проверьте подключение к интернету</string>
+    <string name="err_server_fail">Ошибка сервера. Попробуйте позже</string>
 
 </resources>

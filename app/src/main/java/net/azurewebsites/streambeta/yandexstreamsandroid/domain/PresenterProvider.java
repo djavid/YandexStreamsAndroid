@@ -1,7 +1,13 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.Presenter;
+import net.azurewebsites.streambeta.yandexstreamsandroid.core.Router;
+import net.azurewebsites.streambeta.yandexstreamsandroid.core.View;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.LoginPresenterImpl;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.instancestate.LoginPresenterInstanceState;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.LoginView;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -10,6 +16,10 @@ import java.util.Map;
 
 public class PresenterProvider {
     private Map<String, Presenter> presenterMap;
+
+    public PresenterProvider() {
+        presenterMap = new HashMap<>();
+    }
 
     public <T extends Presenter> T getPresenter(String presenterId, Class<T> c) {
         createPresenter(presenterId);
@@ -20,7 +30,8 @@ public class PresenterProvider {
         if (presenterMap.containsKey(presenterId))
             return;
         switch (presenterId) {
-            //presenter id to class logic
+            case "login":
+                presenterMap.put(presenterId, new LoginPresenterImpl());
         }
     }
 
