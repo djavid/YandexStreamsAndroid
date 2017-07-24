@@ -5,12 +5,14 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.inputmethodservice.KeyboardView;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.MenuItem;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
@@ -33,8 +35,15 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
         SearchFragment.OnListFragmentInteractionListener, GamecodeFragment.OnFragmentInteractionListener,
         ProfileFragment.OnFragmentInteractionListener, DonateFragment.OnFragmentInteractionListener {
 
-    final FragmentManager fragmentManager = getFragmentManager();
+    private final String TAG = getClass().getSimpleName();
+    private final String TAG_SEARCH = "TAG_SEARCH";
+    private final String TAG_DONATE = "TAG_DONATE";
+    private final String TAG_GAMECODE = "TAG_GAMECODE";
+    private final String TAG_PROFILE = "TAG_PROFILE";
+
+    private FragmentManager fragmentManager;
     Fragment searchFragment, gamecodeFragment, profileFragment;
+    private BottomNavigationView navigation;
 
     private MainPresenter presenter;
 
@@ -44,28 +53,20 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-            final FragmentTransaction transaction = fragmentManager.beginTransaction();
-
             switch (item.getItemId()) {
                 case R.id.navigation_search:
 
-                    transaction.replace(R.id.content, searchFragment);
-                    transaction.addToBackStack("searchFragment");
-                    transaction.commit();
+                    changeFragment(searchFragment, TAG_SEARCH, true);
 
                     return true;
                 case R.id.navigation_gamecode:
 
-                    transaction.replace(R.id.content, gamecodeFragment);
-                    transaction.addToBackStack("gamecodeFragment");
-                    transaction.commit();
+                    changeFragment(gamecodeFragment, TAG_GAMECODE, true);
 
                     return true;
                 case R.id.navigation_profile:
 
-                    transaction.replace(R.id.content, profileFragment);
-                    transaction.addToBackStack("profileFragment");
-                    transaction.commit();
+                    changeFragment(profileFragment, TAG_PROFILE, true);
 
                     return true;
             }
@@ -83,7 +84,9 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
         gamecodeFragment = GamecodeFragment.newInstance();
         profileFragment = ProfileFragment.newInstance();
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        fragmentManager = getFragmentManager();
+
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_search);
 
@@ -99,11 +102,58 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
         goToScreen(ScreenTag.AUTH_TWITCH);
     }
 
+
+    private void changeFragment(Fragment fragment, String tag, boolean addBackStack) {
+
+        //KeyboardUtils.hideKeyboard(this); TODO
+
+        Fragment existFragment = fragmentManager.findFragmentByTag(tag);
+
+        if (existFragment == null) {
+            // fragment not in back stack, create it.
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.content, fragment, tag);
+            if (addBackStack) ft.addToBackStack(tag);
+            ft.commit();
+            Log.w(TAG, tag + " added to the backstack");
+        } else {
+            // fragment in back stack, call it back.
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.content, existFragment, tag);
+            ft.commit();
+            Log.w(TAG, tag + " fragment returned back from backstack");
+        }
+    }
+
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
 
-        fragmentManager.popBackStack();
+        int entryCount = fragmentManager.getBackStackEntryCount();
+
+        // if first fragment is not on screen, just pop back to the previous fragment.
+        if (entryCount > 1) {
+            fragmentManager.popBackStack();
+
+            String tag = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 2).getName();
+
+            switch (tag) {
+                case TAG_SEARCH:
+                case TAG_DONATE:
+                    navigation.setSelectedItemId(R.id.navigation_search);
+                    break;
+                case TAG_PROFILE:
+                    navigation.setSelectedItemId(R.id.navigation_profile);
+                    break;
+                case TAG_GAMECODE:
+                    navigation.setSelectedItemId(R.id.navigation_gamecode);
+                    break;
+            }
+
+            return;
+        }
+
+        // if first fragment is showing, then finish the activity.
+        finish();
     }
 
     @Override
@@ -159,11 +209,7 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
         System.out.println(model.getName());
 
         Fragment donateFragment = DonateFragment.newInstance(model);
-
-        final FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.content, donateFragment);
-        transaction.addToBackStack("donateFragment");
-        transaction.commit();
+        changeFragment(donateFragment, TAG_DONATE, true);
     }
 
     @Override

@@ -29,4 +29,10 @@
     <color name="colorDonateButtonTextActive">#29292c</color>
     <color name="colorDonateButtonTextInactive">#979797</color>
 
+    <!-- Scrim background -->
+    <color name="translucent_scrim_top">#7e000000</color>
+    <color name="translucent_scrim_top_center">#7e000000</color>
+    <color name="translucent_scrim_bottom">#aa000000</color>
+    <color name="translucent_scrim_bottom_center">#aa000000</color>
+
 </resources>

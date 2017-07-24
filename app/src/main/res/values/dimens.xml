@@ -7,4 +7,9 @@
     <!-- BottomNavigationView -->
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">10sp</dimen>
+
+    <!-- Scrim -->
+    <dimen name="text_scrim_height_top">50dp</dimen>
+    <dimen name="text_scrim_height_bottom">88dp</dimen>
+
 </resources>

@@ -7,34 +7,61 @@
     tools:context="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.DonateFragment"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rl_toolbar_donate"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="182dp"
-        android:background="@drawable/hova">
+        android:layout_height="182dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/hova" />
 
         <View
-            android:id="@+id/v_toolbar_line"
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorToolbarBottomLine"/>
+            android:layout_height="@dimen/text_scrim_height_bottom"
+            android:background="@drawable/background_scrim_top" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_scrim_height_bottom"
+            android:layout_gravity="bottom"
+            android:background="@drawable/background_scrim_bottom"/>
+
+        <ImageView
+            android:layout_width="27.7dp"
+            android:layout_height="27.7dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/back" />
 
         <TextView
             android:id="@+id/tv_donate_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/v_toolbar_line"
+            android:layout_gravity="bottom"
             android:textSize="24sp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginBottom="10dp"
             android:textAlignment="center"
             android:textColor="@color/colorToolbarName"
             android:text="Я — НЕ ЛЕГЕНДА (ПОКА ЕЩЁ)"
             fontPath="minecraft.ttf"/>
 
-    </RelativeLayout>
+        <View
+            android:id="@+id/v_toolbar_line"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorToolbarBottomLine"/>
+
+    </FrameLayout>
+
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"

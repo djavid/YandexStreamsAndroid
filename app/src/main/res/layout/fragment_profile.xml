@@ -42,7 +42,7 @@
             android:textAlignment="center"
             android:textColor="@color/colorToolbarBalance"
             fontPath="minecraft.ttf"
-            android:text="3 467.00 р." />
+            android:text="@string/title_profile_login" />
 
         <ImageView
             android:id="@+id/iv_toolbar_avatar"
@@ -51,7 +51,7 @@
             android:layout_above="@id/tv_toolbar_balance"
             android:layout_marginBottom="6dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ava" />
+            android:src="@drawable/group" />
 
     </RelativeLayout>
 
@@ -179,6 +179,36 @@
                 android:checked="true"
                 android:theme="@style/SwitchProfile"
                 />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="43.3dp"
+            android:layout_marginTop="27dp"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_icon_exit"
+                android:layout_width="43.3dp"
+                android:layout_height="43.3dp"
+                android:tint="@color/colorProfileLinks"
+                app:srcCompat="@drawable/ic_settings"/>
+
+            <TextView
+                android:id="@+id/tv_exit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_icon_exit"
+                android:layout_toEndOf="@id/iv_icon_exit"
+                android:layout_marginLeft="22dp"
+                android:layout_marginStart="22dp"
+                android:layout_centerVertical="true"
+                android:textSize="21.3sp"
+                android:textColor="@color/colorProfileLinks"
+                fontPath="minecraft.ttf"
+                android:text="@string/title_profile_exit" />
 
         </RelativeLayout>
 
