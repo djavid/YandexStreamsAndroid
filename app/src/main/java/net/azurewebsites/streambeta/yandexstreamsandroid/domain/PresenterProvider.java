@@ -4,6 +4,7 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.core.Presenter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.Router;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.View;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.LoginPresenterImpl;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.StreamFeedPresenterImpl;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.instancestate.LoginPresenterInstanceState;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.LoginView;
 
@@ -32,6 +33,10 @@ public class PresenterProvider {
         switch (presenterId) {
             case "login":
                 presenterMap.put(presenterId, new LoginPresenterImpl());
+                break;
+            case "stream_feed":
+                presenterMap.put(presenterId, new StreamFeedPresenterImpl());
+                break;
         }
     }
 

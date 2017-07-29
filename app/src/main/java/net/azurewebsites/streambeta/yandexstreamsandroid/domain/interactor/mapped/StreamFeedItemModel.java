@@ -1,28 +1,28 @@
-package net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto;
+package net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.mapped;
 
 /**
  * Created by djavid on 20.07.17.
  */
 
 
-public class StreamModel {
+public class StreamFeedItemModel {
 
     private long id;
-    private String imageURL;
+    private String imageUrl;
     private String name;
     private String description;
     private String audience;
 
 
-    public StreamModel(long id, String imageURL, String name, String description, String audience) {
+    public StreamFeedItemModel(long id, String imageURL, String name, String description, String audience) {
         this.id = id;
-        this.imageURL = imageURL;
+        this.imageUrl = imageURL;
         this.name = name;
         this.description = description;
         this.audience = audience;
     }
 
-    public StreamModel() { }
+    public StreamFeedItemModel() { }
 
 
     public long getId() {
@@ -32,11 +32,11 @@ public class StreamModel {
         this.id = id;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImageUrl() {
+        return imageUrl;
     }
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getName() {

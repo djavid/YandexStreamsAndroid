@@ -1,29 +1,28 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.activity;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.inputmethodservice.KeyboardView;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.MenuItem;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamModel;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.mapped.StreamFeedItemModel;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.MainPresenter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.ScreenTag;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.DonateFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.GamecodeFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.ProfileFragment;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.SearchFragment;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.StreamFeedFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.MainView;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -31,8 +30,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 
-public class MainActivity extends AppCompatActivity implements MainView, MainRouter,
-        SearchFragment.OnListFragmentInteractionListener, GamecodeFragment.OnFragmentInteractionListener,
+public class MainActivity extends AppCompatActivity implements MainView, MainRouter, GamecodeFragment.OnFragmentInteractionListener,
         ProfileFragment.OnFragmentInteractionListener, DonateFragment.OnFragmentInteractionListener {
 
     private final String TAG = getClass().getSimpleName();
@@ -80,11 +78,11 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        searchFragment = SearchFragment.newInstance(1);
+        searchFragment = StreamFeedFragment.newInstance();
         gamecodeFragment = GamecodeFragment.newInstance();
         profileFragment = ProfileFragment.newInstance();
 
-        fragmentManager = getFragmentManager();
+        fragmentManager = getSupportFragmentManager();
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -99,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
             menuItem.setTitle(title);
         }
 
-        goToScreen(ScreenTag.AUTH_TWITCH);
+        //goToScreen(ScreenTag.AUTH_TWITCH);
     }
 
 
@@ -205,10 +203,8 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     }
 
     @Override
-    public void onListFragmentInteraction(StreamModel model) {
-        System.out.println(model.getName());
-
-        Fragment donateFragment = DonateFragment.newInstance(model);
+    public void goToStreamPage(int streamId) {
+        Fragment donateFragment = DonateFragment.newInstance(streamId);
         changeFragment(donateFragment, TAG_DONATE, true);
     }
 

@@ -3,6 +3,9 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.domain.model;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.App;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.AccessTokenRequest;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.AccessTokenResponse;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamFeedItemDto;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -26,5 +29,10 @@ public class RestDataRepository implements DataRepository {
     @Override
     public Single<AccessTokenResponse> getUserCode(AccessTokenRequest request) {
         return apiInterface.getUserCode(request);
+    }
+
+    @Override
+    public Single<List<StreamFeedItemDto>> getStreamFeedForQuery(String query, int offset) {
+        return apiInterface.getStreamFeedForQuery(query, 20, offset);
     }
 }

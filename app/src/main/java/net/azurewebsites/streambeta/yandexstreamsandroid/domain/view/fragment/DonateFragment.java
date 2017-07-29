@@ -3,14 +3,14 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamModel;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.mapped.StreamFeedItemModel;
 
 
 public class DonateFragment extends Fragment {
@@ -32,14 +32,15 @@ public class DonateFragment extends Fragment {
     }
 
 
-    public static DonateFragment newInstance(StreamModel streamModel) {
+    public static DonateFragment newInstance(int streamId) {
         DonateFragment fragment = new DonateFragment();
         Bundle args = new Bundle();
 
-        args.putLong(ARG_ID, streamModel.getId());
-        args.putString(ARG_NAME, streamModel.getName());
-        args.putString(ARG_DESCRIPTION, streamModel.getDescription());
-        args.putString(ARG_IMAGE_URL, streamModel.getImageURL());
+            args.putLong(ARG_ID, 1);
+            args.putString(ARG_NAME, "oh");
+            args.putString(ARG_DESCRIPTION, "i'll fix it in a matter of a day");
+            args.putString(ARG_IMAGE_URL, "no image today, sry");
+
         fragment.setArguments(args);
 
         return fragment;

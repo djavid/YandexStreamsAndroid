@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.Presenter;
@@ -72,6 +73,11 @@ public abstract class BaseFragment extends Fragment
 	@Override
 	public void hideProgressbar() {
 		progressbar.setVisibility(View.GONE);
+	}
+
+	@Override
+	public void showError(int errorId){
+		Toast.makeText(getContext(), getString(errorId), Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

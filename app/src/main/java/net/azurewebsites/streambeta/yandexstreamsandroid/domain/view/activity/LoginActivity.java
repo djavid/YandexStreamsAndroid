@@ -17,6 +17,7 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.R;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.Router;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.View;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.App;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.Config;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.PresenterProvider;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.LoginPresenterImpl;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.instancestate.LoginPresenterInstanceState;
@@ -168,7 +169,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Route
         PaymentParams phoneParams = PhoneParams.newInstance("79012345678", new BigDecimal(100.0));
         Intent intent = PaymentActivity.getBuilder(this)
                 .setPaymentParams(phoneParams)
-                .setClientId("880A4ADB0EEA4DABAA6B65ECCB91B71A47EBBFD54F129B7A47CC65D0322FD7B6")
+                .setClientId(Config.YANDEX_MONEY_CLIENT_ID)
                 .build();
         startActivityForResult(intent, 1);
     }*/
