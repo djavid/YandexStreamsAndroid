@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ru.yandex.money.android.PaymentActivity;
 
+
 public class LoginActivity extends AppCompatActivity implements LoginView, Router {
     @BindView(R.id.wv_auth_page)
     WebView webView;
