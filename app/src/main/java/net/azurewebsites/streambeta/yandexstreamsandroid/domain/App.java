@@ -79,6 +79,7 @@ public class App extends Application {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.addInterceptor(logging);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://streambeta.azurewebsites.net/")
                 .addConverterFactory(GsonConverterFactory.create())

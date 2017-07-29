@@ -106,6 +106,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_stream_list"
             android:name="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.SubscribeFragment"
@@ -114,8 +115,12 @@
             app:layoutManager="LinearLayoutManager"
             tools:context="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.StreamFeedFragment"
             tools:listitem="@layout/recycleritem_stream" />
+
         <include layout="@layout/view_progressbar"
             android:visibility="invisible"/>
+
     </FrameLayout>
+
+
 </LinearLayout>
 

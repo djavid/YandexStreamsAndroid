@@ -7,8 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
+import net.azurewebsites.streambeta.yandexstreamsandroid.core.Router;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.view.BaseRecyclerAdapter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.mapped.StreamFeedItemModel;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.StreamFeedFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.util.GlideUtils;
 
 import java.util.function.Consumer;
@@ -23,10 +26,12 @@ import butterknife.ButterKnife;
 public class StreamFeedRecyclerAdapter
         extends BaseRecyclerAdapter<StreamFeedItemModel, StreamFeedRecyclerAdapter.ViewHolder> {
 
-    Consumer<StreamFeedItemModel> onClickListener;
+    private final StreamFeedFragment.OnListFragmentInteractionListener mListener;
 
-    public StreamFeedRecyclerAdapter(Context context) {
+
+    public StreamFeedRecyclerAdapter(Context context, StreamFeedFragment.OnListFragmentInteractionListener mListener) {
         super(context);
+        this.mListener = mListener;
     }
 
     @Override
@@ -35,12 +40,10 @@ public class StreamFeedRecyclerAdapter
         holder.tvDescription.setText(item.getDescription());
         holder.tvViews.setText(item.getAudience());
         GlideUtils.loadImageIntoView(context, holder.ivAvatar, item.getImageUrl(), R.color.colorToolbarBackground);
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != onClickListener) {
-                    onClickListener.accept(item);
-                }
+
+        holder.view.setOnClickListener(v -> {
+            if (null != mListener) {
+                mListener.onListFragmentInteraction(item);
             }
         });
     }

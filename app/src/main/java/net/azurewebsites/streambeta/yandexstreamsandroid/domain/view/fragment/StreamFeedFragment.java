@@ -1,6 +1,6 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment;
 
-import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -23,7 +23,9 @@ import java.util.List;
 
 import butterknife.BindView;
 
+
 public class StreamFeedFragment extends BaseFragment implements StreamFeedView {
+
     @BindView(R.id.et_toolbar)
     EditText etToolbar;
     @BindView(R.id.iv_qr_button)
@@ -40,6 +42,8 @@ public class StreamFeedFragment extends BaseFragment implements StreamFeedView {
     StreamFeedPresenter presenter;
 
     private StreamFeedRecyclerAdapter recyclerAdapter;
+    private OnListFragmentInteractionListener mListener;
+
 
     @Override
     public int getLayoutId() {
@@ -85,7 +89,7 @@ public class StreamFeedFragment extends BaseFragment implements StreamFeedView {
     }
 
     private void setupRecyclerView() {
-        recyclerAdapter = new StreamFeedRecyclerAdapter(getContext());
+        recyclerAdapter = new StreamFeedRecyclerAdapter(getContext(), mListener);
         rvStreamList.setAdapter(recyclerAdapter);
         rvStreamList.setLayoutManager(new LinearLayoutManager(getContext()));
     }
@@ -130,6 +134,18 @@ public class StreamFeedFragment extends BaseFragment implements StreamFeedView {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof OnListFragmentInteractionListener) {
+            mListener = (OnListFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
+    }
+
+    @Override
     public void resetFeed() {
         recyclerAdapter.clear();
     }
@@ -141,5 +157,9 @@ public class StreamFeedFragment extends BaseFragment implements StreamFeedView {
     @Override
     public void setQueryText(String query) {
         etToolbar.setText(query);
+    }
+
+    public interface OnListFragmentInteractionListener {
+        void onListFragmentInteraction(StreamFeedItemModel item);
     }
 }

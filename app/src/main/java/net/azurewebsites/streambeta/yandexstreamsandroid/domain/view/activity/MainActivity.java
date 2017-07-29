@@ -14,7 +14,11 @@ import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.yandex.money.api.methods.payment.params.P2pTransferParams;
+import com.yandex.money.api.methods.payment.params.PaymentParams;
+
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.Config;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.mapped.StreamFeedItemModel;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.MainPresenter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
@@ -25,13 +29,18 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.Pr
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.StreamFeedFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.MainView;
 
+import java.math.BigDecimal;
+
+import ru.yandex.money.android.PaymentActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 
-public class MainActivity extends AppCompatActivity implements MainView, MainRouter, GamecodeFragment.OnFragmentInteractionListener,
-        ProfileFragment.OnFragmentInteractionListener, DonateFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements MainView, MainRouter,
+        GamecodeFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener,
+        StreamFeedFragment.OnListFragmentInteractionListener {
+
 
     private final String TAG = getClass().getSimpleName();
     private final String TAG_SEARCH = "TAG_SEARCH";
@@ -44,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     private BottomNavigationView navigation;
 
     private MainPresenter presenter;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -212,6 +222,30 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    @Override
+    public void onListFragmentInteraction(StreamFeedItemModel item) {
+//        startPaymentActivityForResult(
+//                new P2pTransferParams.Builder(Long.toString(item.getId()))
+//                        .setAmount(new BigDecimal(1))
+//                        .create()
+//        );
+
+        goToStreamPage(item.getId());
+    }
+
+    private static final int REQUEST_CODE = 101;
+
+//    private void startPaymentActivityForResult(PaymentParams paymentParams) {
+//
+//        goToScreen(ScreenTag.AUTH_YANDEX_MONEY);
+//
+//        Intent intent = PaymentActivity.getBuilder(this)
+//                .setPaymentParams(paymentParams)
+//                .setClientId(Config.YANDEX_MONEY_CLIENT_ID)
+//                .build();
+//        startActivityForResult(intent, REQUEST_CODE);
+//    }
 
     @Override
     protected void attachBaseContext(Context newBase) {

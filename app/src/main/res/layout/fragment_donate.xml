@@ -61,8 +61,6 @@
     </FrameLayout>
 
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -304,5 +302,6 @@
         android:textSize="21.3dp"
         android:textColor="@color/colorDonateButtonTextActive"
         fontPath="minecraft.ttf" />
+
 
 </LinearLayout>

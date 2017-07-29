@@ -79,4 +79,8 @@ dependencies {
 
     //segmented buttons
     compile 'info.hoang8f:android-segmented:1.0.6'
+
+    //yandex money api
+    compile 'com.yandex.money.api:yandex-money-sdk-android:4.0.4'
+
 }

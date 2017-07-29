@@ -18,6 +18,7 @@ import retrofit2.http.Query;
  * Created by Tetawex on 15.07.2017.
  */
 
+
 public interface ApiInterface {
     @POST("api/oauth")
     Single<AccessTokenResponse> getUserCode(@Body AccessTokenRequest request);
@@ -25,4 +26,6 @@ public interface ApiInterface {
     @GET("/api/streams/Search?req=j&limit=1&offset=1")
     Single<List<StreamFeedItemDto>> getStreamFeedForQuery(
             @Query("req") String query, @Query("limit") int size, @Query("offset") int offset);
+
+
 }

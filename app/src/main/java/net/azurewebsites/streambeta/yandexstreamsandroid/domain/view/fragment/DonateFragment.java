@@ -1,31 +1,31 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.mapped.StreamFeedItemModel;
+import net.azurewebsites.streambeta.yandexstreamsandroid.core.view.BaseFragment;
+
+import butterknife.BindView;
 
 
-public class DonateFragment extends Fragment {
+public class DonateFragment extends BaseFragment {
 
-    private static final String ARG_ID = "id";
-    private static final String ARG_NAME = "name";
-    private static final String ARG_DESCRIPTION = "description";
-    private static final String ARG_IMAGE_URL = "image_url";
+    @BindView(R.id.rl_donate_audio)
+    RelativeLayout rl_donate_audio;
+    @BindView(R.id.rl_donate_text)
+    RelativeLayout rl_donate_text;
+    @BindView(R.id.btn_text_donate)
+    RadioButton btn_text_donate;
+    @BindView(R.id.btn_audio_donate)
+    RadioButton btn_audio_donate;
 
-    private long mParamId;
-    private String mParamName;
-    private String mParamDescription;
-    private String mParamImageUrl;
+    private static final String ARG_STREAM_ID = "id";
+    
+    private int mParamId;
 
-    private OnFragmentInteractionListener mListener;
 
     public DonateFragment() {
         // Required empty public constructor
@@ -36,10 +36,7 @@ public class DonateFragment extends Fragment {
         DonateFragment fragment = new DonateFragment();
         Bundle args = new Bundle();
 
-            args.putLong(ARG_ID, 1);
-            args.putString(ARG_NAME, "oh");
-            args.putString(ARG_DESCRIPTION, "i'll fix it in a matter of a day");
-            args.putString(ARG_IMAGE_URL, "no image today, sry");
+        args.putLong(ARG_STREAM_ID, streamId);
 
         fragment.setArguments(args);
 
@@ -50,71 +47,43 @@ public class DonateFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParamId = getArguments().getLong(ARG_ID);
-            mParamName = getArguments().getString(ARG_NAME);
-            mParamDescription = getArguments().getString(ARG_DESCRIPTION);
-            mParamImageUrl = getArguments().getString(ARG_IMAGE_URL);
+            mParamId = getArguments().getInt(ARG_STREAM_ID);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_donate, container, false);
+    public int getLayoutId() {
+        return R.layout.fragment_donate;
+    }
 
-        view.findViewById(R.id.rl_donate_audio).setVisibility(View.GONE);
-        view.findViewById(R.id.rl_donate_text).setVisibility(View.VISIBLE);
+    @Override
+    public String getPresenterId() {
+        return "donate_fragment";
+    }
 
-        final RadioButton textButton = (RadioButton) view.findViewById(R.id.btn_text_donate);
-        final RadioButton audioButton = (RadioButton) view.findViewById(R.id.btn_audio_donate);
+    @Override
+    public View setupView(View view) {
 
-        textButton.setChecked(true);
+        rl_donate_audio.setVisibility(View.GONE);
+        rl_donate_text.setVisibility(View.VISIBLE);
 
-        textButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.findViewById(R.id.rl_donate_audio).setVisibility(View.GONE);
-                view.findViewById(R.id.rl_donate_text).setVisibility(View.VISIBLE);
-            }
+        btn_text_donate.setChecked(true);
+
+        btn_text_donate.setOnClickListener(v -> {
+            rl_donate_audio.setVisibility(View.GONE);
+            rl_donate_text.setVisibility(View.VISIBLE);
         });
 
-        audioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.findViewById(R.id.rl_donate_text).setVisibility(View.GONE);
-                view.findViewById(R.id.rl_donate_audio).setVisibility(View.VISIBLE);
-            }
+        btn_audio_donate.setOnClickListener(v -> {
+            rl_donate_text.setVisibility(View.GONE);
+            rl_donate_audio.setVisibility(View.VISIBLE);
         });
 
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+    public void loadData() {
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-
-        void onFragmentInteraction(Uri uri);
     }
 }

@@ -7,14 +7,14 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.mapp
 
 public class StreamFeedItemModel {
 
-    private long id;
+    private int id;
     private String imageUrl;
     private String name;
     private String description;
     private String audience;
 
 
-    public StreamFeedItemModel(long id, String imageURL, String name, String description, String audience) {
+    public StreamFeedItemModel(int id, String imageURL, String name, String description, String audience) {
         this.id = id;
         this.imageUrl = imageURL;
         this.name = name;
@@ -25,10 +25,10 @@ public class StreamFeedItemModel {
     public StreamFeedItemModel() { }
 
 
-    public long getId() {
+    public int getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
