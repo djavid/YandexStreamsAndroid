@@ -66,11 +66,11 @@ public class SearchFragment extends Fragment {
             }
 
             List<StreamModel> items = new ArrayList<>();
-            items.add(new StreamModel(0, "", "Grimmmz", "Join the bald dota ...", "290 058 зрителей"));
-            items.add(new StreamModel(0, "", "AdmiralBulldog", "[A] @admiralbulldo…", "75 669 Зрителей"));
-            items.add(new StreamModel(0, "", "MidOne", "1, 2, 3 headshot kills", "49 935 Подписчик"));
-            items.add(new StreamModel(0, "", "Naded", "Matchmaking! | Me…", "443 Зрителя"));
-            items.add(new StreamModel(0, "", "snake_nade", "Pro Rainbow6Sie…", "114 Зрителей"));
+            items.add(new StreamModel(0, "", "", "Grimmmz", "Join the bald dota ...", "290 058 зрителей"));
+            items.add(new StreamModel(0, "", "", "AdmiralBulldog", "[A] @admiralbulldo…", "75 669 Зрителей"));
+            items.add(new StreamModel(0, "", "", "MidOne", "1, 2, 3 headshot kills", "49 935 Подписчик"));
+            items.add(new StreamModel(0, "", "", "Naded", "Matchmaking! | Me…", "443 Зрителя"));
+            items.add(new StreamModel(0, "", "", "snake_nade", "Pro Rainbow6Sie…", "114 Зрителей"));
 
             recyclerView.setAdapter(new MySearchRecyclerViewAdapter(items, mListener));
 //        }

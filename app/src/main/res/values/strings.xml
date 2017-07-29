@@ -31,4 +31,7 @@
     <string name="err_network_fail">Проверьте подключение к интернету</string>
     <string name="err_server_fail">Ошибка сервера. Попробуйте позже</string>
 
+    <!-- History fragment -->
+    <string name="title_history_toolbar">История</string>
+
 </resources>

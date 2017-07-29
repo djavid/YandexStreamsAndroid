@@ -15,12 +15,14 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.Stream
 
 public class DonateFragment extends Fragment {
 
-    private static final String ARG_ID = "id";
+    private static final String ARG_STREAM_ID = "stream_id";
+    private static final String ARG_STREAMER_ID = "streamer_id";
     private static final String ARG_NAME = "name";
     private static final String ARG_DESCRIPTION = "description";
     private static final String ARG_IMAGE_URL = "image_url";
 
-    private long mParamId;
+    private long mParamStreamId;
+    private String mParamStreamerId;
     private String mParamName;
     private String mParamDescription;
     private String mParamImageUrl;
@@ -36,7 +38,8 @@ public class DonateFragment extends Fragment {
         DonateFragment fragment = new DonateFragment();
         Bundle args = new Bundle();
 
-        args.putLong(ARG_ID, streamModel.getId());
+        args.putLong(ARG_STREAM_ID, streamModel.getStream_id());
+        args.putString(ARG_STREAMER_ID, streamModel.getStreamer_id());
         args.putString(ARG_NAME, streamModel.getName());
         args.putString(ARG_DESCRIPTION, streamModel.getDescription());
         args.putString(ARG_IMAGE_URL, streamModel.getImageURL());
@@ -49,7 +52,8 @@ public class DonateFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParamId = getArguments().getLong(ARG_ID);
+            mParamStreamerId = getArguments().getString(ARG_STREAMER_ID);
+            mParamStreamId = getArguments().getLong(ARG_STREAM_ID);
             mParamName = getArguments().getString(ARG_NAME);
             mParamDescription = getArguments().getString(ARG_DESCRIPTION);
             mParamImageUrl = getArguments().getString(ARG_IMAGE_URL);

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingPrefix, ContentDescription"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="horizontal">
+
+    
+    <ImageView
+        android:id="@+id/history_stream_avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/avatar_example" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_toRightOf="@id/history_stream_avatar"
+        android:layout_toEndOf="@id/history_stream_avatar"
+        android:layout_marginStart="27dp"
+        android:layout_marginLeft="27dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/history_stream_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="21.3sp"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:text="AdmiralBulldog"
+            fontPath="minecraft.ttf" />
+
+        <TextView
+            android:id="@+id/history_stream_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:layout_marginTop="12.7dp"
+            android:text="300 руб."
+            fontPath="minecraft.ttf" />
+
+        <TextView
+            android:id="@+id/history_stream_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:layout_marginTop="10.7dp"
+            android:text="24.04.17"
+            fontPath="minecraft.ttf" />
+
+    </LinearLayout>
+
+</RelativeLayout>

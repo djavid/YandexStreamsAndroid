@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingPrefix, ContentDescription"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:id="@+id/rl_toolbar_search"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorToolbarBackground">
+
+        <View
+            android:id="@+id/v_toolbar_line"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorToolbarBottomLine"/>
+
+        <TextView
+            android:id="@+id/tv_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorToolbarName"
+            fontPath="minecraft.ttf"
+            android:text="@string/title_history_toolbar"/>
+
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_history_fragment"
+        android:name="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.HistoryFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.HistoryFragment"
+        tools:listitem="@layout/fragment_history" />
+
+</LinearLayout>

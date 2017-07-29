@@ -47,6 +47,7 @@
             android:layout_marginLeft="27.3dp"
             android:layout_marginTop="12.7dp"
             android:textSize="16sp"
+            android:textAppearance="?attr/textAppearanceListItem"
             android:textColor="@color/colorListText"
             android:text="Join the bald dota …"
             fontPath="minecraft.ttf"/>
@@ -59,6 +60,7 @@
             android:layout_marginLeft="27.3dp"
             android:layout_marginTop="10.7dp"
             android:textSize="16sp"
+            android:textAppearance="?attr/textAppearanceListItem"
             android:textColor="@color/colorListText"
             android:text="290 058 Зрителей  "
             fontPath="minecraft.ttf"/>

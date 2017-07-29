@@ -7,15 +7,17 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto;
 
 public class StreamModel {
 
-    private long id;
+    private long stream_id;
+    private String streamer_id;
     private String imageURL;
     private String name;
     private String description;
     private String audience;
 
 
-    public StreamModel(long id, String imageURL, String name, String description, String audience) {
-        this.id = id;
+    public StreamModel(long stream_id, String streamer_id, String imageURL, String name, String description, String audience) {
+        this.stream_id = stream_id;
+        this.streamer_id = streamer_id;
         this.imageURL = imageURL;
         this.name = name;
         this.description = description;
@@ -25,11 +27,18 @@ public class StreamModel {
     public StreamModel() { }
 
 
-    public long getId() {
-        return id;
+    public long getStream_id() {
+        return stream_id;
     }
-    public void setId(long id) {
-        this.id = id;
+    public void setStream_id(long stream_id) {
+        this.stream_id = stream_id;
+    }
+
+    public String getStreamer_id() {
+        return streamer_id;
+    }
+    public void setStreamer_id(String streamer_id) {
+        this.streamer_id = streamer_id;
     }
 
     public String getImageURL() {
