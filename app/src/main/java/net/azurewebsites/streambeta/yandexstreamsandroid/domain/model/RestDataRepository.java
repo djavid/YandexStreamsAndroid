@@ -4,6 +4,7 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.App;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.AccessTokenRequest;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.AccessTokenResponse;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamFeedItemDto;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamSettingsDto;
 
 import java.util.List;
 
@@ -34,5 +35,10 @@ public class RestDataRepository implements DataRepository {
     @Override
     public Single<List<StreamFeedItemDto>> getStreamFeedForQuery(String query, int offset) {
         return apiInterface.getStreamFeedForQuery(query, 20, offset);
+    }
+
+    @Override
+    public Single<StreamSettingsDto> getStreamSettings(int stream_id) {
+        return apiInterface.getStreamSettings(stream_id);
     }
 }

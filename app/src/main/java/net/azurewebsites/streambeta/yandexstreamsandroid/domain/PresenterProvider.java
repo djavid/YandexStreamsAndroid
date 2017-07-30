@@ -3,6 +3,7 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.domain;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.Presenter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.Router;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.View;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.DonateFragmentPresenterImpl;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.LoginPresenterImpl;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.StreamFeedPresenterImpl;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.instancestate.LoginPresenterInstanceState;
@@ -36,6 +37,9 @@ public class PresenterProvider {
                 break;
             case "stream_feed":
                 presenterMap.put(presenterId, new StreamFeedPresenterImpl());
+                break;
+            case "donate_fragment":
+                presenterMap.put(presenterId, new DonateFragmentPresenterImpl());
                 break;
         }
     }

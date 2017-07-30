@@ -3,6 +3,7 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.domain.model;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.AccessTokenRequest;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.AccessTokenResponse;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamFeedItemDto;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamSettingsDto;
 
 import java.util.List;
 
@@ -27,5 +28,6 @@ public interface ApiInterface {
     Single<List<StreamFeedItemDto>> getStreamFeedForQuery(
             @Query("req") String query, @Query("limit") int size, @Query("offset") int offset);
 
-
+    @GET("http://streambeta.azurewebsites.net/api/Streams/GetOnlineSettings?stream_id=0")
+    Single<StreamSettingsDto> getStreamSettings(@Query("stream_id") int stream_id);
 }

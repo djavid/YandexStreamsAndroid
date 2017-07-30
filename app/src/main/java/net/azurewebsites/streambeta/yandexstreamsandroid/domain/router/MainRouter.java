@@ -8,6 +8,6 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.core.Router;
 
 public interface MainRouter extends Router {
     void goToScreen(ScreenTag screenTag);
-    void goToStreamPage(int streamId);
+    void goToStreamPage(int streamId, String streamName);
     ScreenTag getCurrentScreen();
 }

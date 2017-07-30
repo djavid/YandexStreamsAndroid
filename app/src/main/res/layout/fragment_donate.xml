@@ -9,10 +9,12 @@
 
 
     <FrameLayout
+        android:id="@+id/fl_toolbar_donate"
         android:layout_width="match_parent"
         android:layout_height="182dp">
 
         <ImageView
+            android:id="@+id/iv_avatar_donate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -62,6 +64,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/rl_form_donate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="20dp"
@@ -124,7 +127,7 @@
                 android:background="@null"
                 android:textSize="21.3sp"
                 android:textColor="@color/colorDonateEdittext"
-                android:inputType="text"
+                android:inputType="numberDecimal"
                 android:maxLines="1"
                 fontPath="minecraft.ttf"/>
 
@@ -198,7 +201,7 @@
                 android:id="@+id/rl_donate_text"
                 android:layout_width="match_parent"
                 android:layout_height="30.3dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <EditText
                     android:id="@+id/et_donate_text"
@@ -237,7 +240,7 @@
                 android:id="@+id/rl_donate_audio"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_donate_audio"
@@ -302,6 +305,9 @@
         android:textSize="21.3dp"
         android:textColor="@color/colorDonateButtonTextActive"
         fontPath="minecraft.ttf" />
+
+    <include layout="@layout/view_progressbar"
+        android:visibility="invisible"/>
 
 
 </LinearLayout>

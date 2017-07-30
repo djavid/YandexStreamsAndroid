@@ -118,9 +118,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Route
                 }
                 return false;
             }
-        }
+        };
 
-        ;
         webView.setWebViewClient(webViewClient);
     }
 

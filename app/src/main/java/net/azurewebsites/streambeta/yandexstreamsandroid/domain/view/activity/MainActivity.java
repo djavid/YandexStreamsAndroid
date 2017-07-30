@@ -213,8 +213,8 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     }
 
     @Override
-    public void goToStreamPage(int streamId) {
-        Fragment donateFragment = DonateFragment.newInstance(streamId);
+    public void goToStreamPage(int streamId, String streamDesc) {
+        Fragment donateFragment = DonateFragment.newInstance(streamId, streamDesc);
         changeFragment(donateFragment, TAG_DONATE, true);
     }
 
@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
 //                        .create()
 //        );
 
-        goToStreamPage(item.getId());
+        goToStreamPage(item.getId(), item.getDescription());
     }
 
     private static final int REQUEST_CODE = 101;
