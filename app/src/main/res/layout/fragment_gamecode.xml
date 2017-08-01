@@ -5,8 +5,9 @@
     tools:ignore="MissingPrefix, ContentDescription"
     tools:context="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.GamecodeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <com.dlazaro66.qrcodereaderview.QRCodeReaderView
+        android:id="@+id/qrdecoderview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

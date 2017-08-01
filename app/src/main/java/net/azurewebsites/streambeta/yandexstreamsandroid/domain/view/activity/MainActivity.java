@@ -1,14 +1,18 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.util.Log;
@@ -18,6 +22,7 @@ import com.yandex.money.api.methods.payment.params.P2pTransferParams;
 import com.yandex.money.api.methods.payment.params.PaymentParams;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.App;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.Config;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.mapped.StreamFeedItemModel;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.MainPresenter;
@@ -28,8 +33,10 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.Ga
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.ProfileFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.StreamFeedFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.MainView;
+import net.azurewebsites.streambeta.yandexstreamsandroid.util.RxUtils;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import ru.yandex.money.android.PaymentActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -38,7 +45,7 @@ import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 
 public class MainActivity extends AppCompatActivity implements MainView, MainRouter,
-        GamecodeFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener,
+        ProfileFragment.OnFragmentInteractionListener,
         StreamFeedFragment.OnListFragmentInteractionListener {
 
 
@@ -47,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     private final String TAG_DONATE = "TAG_DONATE";
     private final String TAG_GAMECODE = "TAG_GAMECODE";
     private final String TAG_PROFILE = "TAG_PROFILE";
+
+    static final private int DONATE_FOR_RESULT = 0;
 
     private FragmentManager fragmentManager;
     Fragment searchFragment, gamecodeFragment, profileFragment;
@@ -107,7 +116,32 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
             menuItem.setTitle(title);
         }
 
+        if (!App.getAppInstance().getApiClient().isAuthorized()) {
+            if (!App.getAppInstance().getPreferencesWrapper().getAuthToken("yandex_money").isEmpty()) {
+                App.getAppInstance().getApiClient().setAccessToken(App.getAppInstance()
+                        .getPreferencesWrapper().getAuthToken("yandex_money"));
+            }
+        }
+
         //goToScreen(ScreenTag.AUTH_TWITCH);
+
+        if (App.getAppInstance().getPreferencesWrapper().getDeviceId("device_id").isEmpty()) {
+            showProgressbar();
+
+            String uniqueID = UUID.randomUUID().toString();
+            App.getAppInstance().getApiInterface().createUser(uniqueID)
+                    .doOnError(Throwable::printStackTrace)
+                    .compose(RxUtils.applyCompletableSchedulers())
+                    .subscribe(() -> {
+                        hideProgressbar();
+                        App.getAppInstance().getPreferencesWrapper().setDeviceId("device_id", uniqueID);
+                        System.out.println(App.getAppInstance().getPreferencesWrapper().getDeviceId("device_id"));
+                        //TODO show alert about success
+                    }, exception -> {
+                        hideProgressbar();
+                    });
+
+        }
     }
 
 
@@ -201,7 +235,8 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
             case AUTH_YANDEX_MONEY: {
                 Intent intent = new Intent(this, LoginActivity.class);
                 intent.putExtra("auth_type", "yandex_money");
-                startActivity(intent);
+                //startActivity(intent);
+                startActivityForResult(intent, DONATE_FOR_RESULT);
                 break;
             }
         }
@@ -213,8 +248,8 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     }
 
     @Override
-    public void goToStreamPage(int streamId, String streamDesc) {
-        Fragment donateFragment = DonateFragment.newInstance(streamId, streamDesc);
+    public void goToStreamPage(int streamId, String streamDesc, String streamerId) {
+        Fragment donateFragment = DonateFragment.newInstance(streamId, streamDesc, streamerId);
         changeFragment(donateFragment, TAG_DONATE, true);
     }
 
@@ -231,24 +266,36 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
 //                        .create()
 //        );
 
-        goToStreamPage(item.getId(), item.getDescription());
+        if (!isAuthorised()) {
+            goToScreen(ScreenTag.AUTH_YANDEX_MONEY);
+        } else {
+            goToStreamPage(item.getId(), item.getDescription(), item.getStreamer_id());
+        }
     }
 
-    private static final int REQUEST_CODE = 101;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-//    private void startPaymentActivityForResult(PaymentParams paymentParams) {
-//
-//        goToScreen(ScreenTag.AUTH_YANDEX_MONEY);
-//
-//        Intent intent = PaymentActivity.getBuilder(this)
-//                .setPaymentParams(paymentParams)
-//                .setClientId(Config.YANDEX_MONEY_CLIENT_ID)
-//                .build();
-//        startActivityForResult(intent, REQUEST_CODE);
-//    }
+        if (resultCode == RESULT_OK) {
+            App.getAppInstance().getApiClient().setAccessToken(App.getAppInstance()
+                    .getPreferencesWrapper().getAuthToken("yandex_money"));
+
+//            System.out.println("RESULT_OK");
+//            Fragment curr_frag = getSupportFragmentManager().findFragmentById(R.id.content);
+//            if (curr_frag instanceof DonateFragment) {
+//                ((DonateFragment) curr_frag).getPresenter().requestPayment();
+//            }
+            //goToStreamPage(item.getId(), item.getDescription(), item.getStreamer_id());
+        }
+    }
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    public boolean isAuthorised() {
+        return App.getAppInstance().getApiClient().isAuthorized();
     }
 }

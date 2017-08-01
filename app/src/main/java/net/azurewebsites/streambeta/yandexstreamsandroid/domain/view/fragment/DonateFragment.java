@@ -1,5 +1,7 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -13,17 +15,35 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.zxing.common.StringUtils;
+import com.yandex.money.api.authorization.AuthorizationParameters;
+import com.yandex.money.api.methods.InstanceId;
+import com.yandex.money.api.methods.payment.RequestPayment;
+import com.yandex.money.api.methods.payment.params.P2pTransferParams;
+import com.yandex.money.api.methods.payment.params.PaymentParams;
+import com.yandex.money.api.net.ApiRequest;
+import com.yandex.money.api.net.clients.ApiClient;
+import com.yandex.money.api.net.clients.DefaultApiClient;
+import com.yandex.money.api.util.Responses;
+
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.view.BaseFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.view.DonateFragmentView;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.App;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.Config;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamSettingsDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.instancestate.DonateFragmentPresenterInstanceState;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.DonateFragmentPresenter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.ScreenTag;
 import net.azurewebsites.streambeta.yandexstreamsandroid.util.GlideUtils;
+import net.azurewebsites.streambeta.yandexstreamsandroid.util.RxUtils;
+
+import java.math.BigDecimal;
 
 import butterknife.BindView;
+import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 
 public class DonateFragment extends BaseFragment implements DonateFragmentView {
@@ -64,11 +84,16 @@ public class DonateFragment extends BaseFragment implements DonateFragmentView {
     @BindView(R.id.tv_donate_hint_nick)
     TextView tv_donate_hint_nick;
 
+    @BindView(R.id.back_button_donate)
+    ImageView back_button_donate;
+
 
     private static final String ARG_STREAM_ID = "id";
     private static final String ARG_STREAM_DESC = "name";
+    private static final String ARG_STREAMER_ID = "streamer";
     private int mParamId;
     private String mParamDesc;
+    private String mParamStreamer;
 
     DonateFragmentPresenter presenter;
 
@@ -95,12 +120,13 @@ public class DonateFragment extends BaseFragment implements DonateFragmentView {
     }
 
 
-    public static DonateFragment newInstance(int streamId, String streamName) {
+    public static DonateFragment newInstance(int streamId, String streamName, String streamer_id) {
         DonateFragment fragment = new DonateFragment();
         Bundle args = new Bundle();
 
-        args.putLong(ARG_STREAM_ID, streamId);
+        args.putInt(ARG_STREAM_ID, streamId);
         args.putString(ARG_STREAM_DESC, streamName);
+        args.putString(ARG_STREAMER_ID, streamer_id);
 
         fragment.setArguments(args);
 
@@ -113,6 +139,7 @@ public class DonateFragment extends BaseFragment implements DonateFragmentView {
         if (getArguments() != null) {
             mParamId = getArguments().getInt(ARG_STREAM_ID);
             mParamDesc = getArguments().getString(ARG_STREAM_DESC);
+            mParamStreamer = getArguments().getString(ARG_STREAMER_ID);
         }
     }
 
@@ -207,8 +234,48 @@ public class DonateFragment extends BaseFragment implements DonateFragmentView {
             }
         });
 
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Выберите способ оплаты:");
+        alertDialog.setCancelable(false);
+
+
+        final String[] items = {"Бансковская карта", "Счет в Я.Деньги"};
+        alertDialog.setItems(items, (dialog, which) -> {
+        //TODO
+        });
+
         btn_submit_donate.setOnClickListener(v -> {
-            presenter.getRouter().goToScreen(ScreenTag.AUTH_YANDEX_MONEY);
+
+            if (presenter.isAuthorised()) {
+                if (presenter.checkForm()) {
+                    presenter.requestPayment();
+                } else {
+                    if ((getDonateText().isEmpty() || !getDonateText().isEmpty())
+                            && getSumText() < presenter.getStreamSettings().getMinSum()) {
+
+                        AlertDialog.Builder alert = createDonateAlertDialog();
+                        alert.setTitle("Неправильные данные");
+                        alert.setMessage("Минимальная сумма доната - " +
+                                presenter.getStreamSettings().getMinSum() + "!");
+                        alert.setPositiveButton("Закрыть", (dialog, which) -> dialog.cancel());
+                        alert.show();
+                    } else {
+                        AlertDialog.Builder alert = createDonateAlertDialog();
+                        alert.setTitle("Неправильные данные");
+                        alert.setMessage("Заполните все поля!");
+                        alert.setPositiveButton("Закрыть", (dialog, which) -> dialog.cancel());
+                        alert.show();
+                    }
+                }
+            } else {
+                presenter.getRouter().goToScreen(ScreenTag.AUTH_YANDEX_MONEY);
+            }
+
+        });
+
+        back_button_donate.setOnClickListener(v -> {
+            getActivity().onBackPressed();
         });
 
         return view;
@@ -270,5 +337,39 @@ public class DonateFragment extends BaseFragment implements DonateFragmentView {
     @Override
     public void setSumText(String donateSumText) {
         et_donate_value.setText(donateSumText);
+    }
+
+    @Override
+    public String getNicknameText() {
+        return et_donate_nick.getText().toString();
+    }
+
+    @Override
+    public String getDonateText() {
+        return et_donate_text.getText().toString();
+    }
+
+    @Override
+    public int getSumText() {
+        if (et_donate_value.getText().toString().isEmpty()) return -1;
+        else return Integer.parseInt(et_donate_value.getText().toString()) * 100;
+    }
+
+    public DonateFragmentPresenter getPresenter() {
+        return presenter;
+    }
+
+    @Override
+    public String getStreamerId() {
+        return mParamStreamer;
+    }
+
+    @Override
+    public AlertDialog.Builder createDonateAlertDialog() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setTitle("Отправка доната");
+        alert.setMessage("Отправить " + (float)(getSumText() / 100) + "руб. на стрим '" + mParamDesc + "'?");
+
+        return alert;
     }
 }

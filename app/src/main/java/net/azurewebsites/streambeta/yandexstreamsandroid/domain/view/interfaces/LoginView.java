@@ -10,4 +10,6 @@ public interface LoginView extends View {
     void loadUrl(String url);
     void postUrl(String url, byte[] postData);
     boolean hasUrlLoaded();
+
+    void setAuthResult(int result);
 }

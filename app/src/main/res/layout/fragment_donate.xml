@@ -32,6 +32,7 @@
             android:background="@drawable/background_scrim_bottom"/>
 
         <ImageView
+            android:id="@+id/back_button_donate"
             android:layout_width="27.7dp"
             android:layout_height="27.7dp"
             android:layout_marginLeft="5dp"

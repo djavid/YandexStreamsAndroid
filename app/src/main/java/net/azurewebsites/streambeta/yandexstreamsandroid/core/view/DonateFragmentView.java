@@ -1,5 +1,7 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.core.view;
 
+import android.app.AlertDialog;
+
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.View;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamSettingsDto;
 
@@ -13,4 +15,12 @@ public interface DonateFragmentView extends View {
     void setNicknameText(String nicknameText);
     void setDonateText(String donateText);
     void setSumText(String donateSumText);
+
+    String getNicknameText();
+    String getDonateText();
+    int getSumText();
+
+    AlertDialog.Builder createDonateAlertDialog();
+
+    String getStreamerId();
 }

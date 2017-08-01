@@ -38,6 +38,7 @@ public class StreamFeedUseCase implements StreamFeedInteractor {
                         model.setName(dto.getChannel());
                         model.setImageUrl("http://streambeta.azurewebsites.net/api/images?id="
                                 + dto.getStreamId() + "&type=logo");
+                        model.setStreamer_id(dto.getStreamerId());
                         models.add(model);
                     }
                     return models;

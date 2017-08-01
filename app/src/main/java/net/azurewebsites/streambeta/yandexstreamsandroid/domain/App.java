@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatDelegate;
 
+import com.yandex.money.api.net.clients.ApiClient;
+import com.yandex.money.api.net.clients.DefaultApiClient;
+
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.ApiInterface;
 import net.danlew.android.joda.JodaTimeAndroid;
@@ -26,6 +29,9 @@ public class App extends Application {
     private ApiInterface apiInterface;
     private PresenterProvider presenterProvider;
     private SharedPreferences sharedPreferences;
+    private static final ApiClient apiClient = new DefaultApiClient.Builder()
+            .setClientId(Config.YANDEX_MONEY_CLIENT_ID)
+            .create();
 
     public static String SHARED_PREFERENCES_CODE="yandexstreamsandroid";
     public static String CLIENT_ID;
@@ -74,6 +80,10 @@ public class App extends Application {
         return new PreferencesWrapper(getRawPreferences());
     }
 
+    public ApiClient getApiClient() {
+        return apiClient;
+    }
+
     private ApiInterface buildApiInterface() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -81,7 +91,7 @@ public class App extends Application {
         httpClient.addInterceptor(logging);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://streambeta.azurewebsites.net/")
+                .baseUrl("https://www.yastream.win/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(httpClient.build())

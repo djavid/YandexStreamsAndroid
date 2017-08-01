@@ -41,7 +41,10 @@ public class AccessTokenUseCase implements AccessTokenInteractor {
                 .doOnSuccess(accessTokenResponse -> {
                     App.getAppInstance()
                             .getPreferencesWrapper()
-                            .setAuthToken(authType,accessTokenResponse.getAccessToken());
+                            .setAuthToken(authType, accessTokenResponse.getAccessToken());
+                    App.getAppInstance()
+                            .getApiClient()
+                            .setAccessToken(accessTokenResponse.getAccessToken());
                 })
                 .toCompletable();
     }

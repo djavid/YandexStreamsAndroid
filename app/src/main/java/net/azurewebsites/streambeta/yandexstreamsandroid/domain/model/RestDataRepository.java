@@ -3,11 +3,13 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.domain.model;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.App;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.AccessTokenRequest;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.AccessTokenResponse;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.DonationDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamFeedItemDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamSettingsDto;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
@@ -30,6 +32,11 @@ public class RestDataRepository implements DataRepository {
     @Override
     public Single<AccessTokenResponse> getUserCode(AccessTokenRequest request) {
         return apiInterface.getUserCode(request);
+    }
+
+    @Override
+    public Completable sendDonationWithId(DonationDto donation) {
+        return apiInterface.sendDonationWithId(donation);
     }
 
     @Override

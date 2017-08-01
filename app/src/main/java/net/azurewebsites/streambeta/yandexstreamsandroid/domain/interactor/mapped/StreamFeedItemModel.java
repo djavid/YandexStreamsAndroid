@@ -12,6 +12,7 @@ public class StreamFeedItemModel {
     private String name;
     private String description;
     private String audience;
+    private String streamer_id;
 
 
     public StreamFeedItemModel(int id, String imageURL, String name, String description, String audience) {
@@ -58,5 +59,12 @@ public class StreamFeedItemModel {
     }
     public void setAudience(String audience) {
         this.audience = audience;
+    }
+
+    public String getStreamer_id() {
+        return streamer_id;
+    }
+    public void setStreamer_id(String streamer_id) {
+        this.streamer_id = streamer_id;
     }
 }

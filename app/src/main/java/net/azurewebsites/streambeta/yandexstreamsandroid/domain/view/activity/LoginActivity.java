@@ -10,8 +10,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.yandex.money.api.methods.payment.params.PaymentParams;
-import com.yandex.money.api.methods.payment.params.PhoneParams;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.Router;
@@ -25,6 +23,7 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interf
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.LoginView;
 
 import java.math.BigDecimal;
+import java.net.URISyntaxException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +32,7 @@ import ru.yandex.money.android.PaymentActivity;
 
 
 public class LoginActivity extends AppCompatActivity implements LoginView, Router {
+
     @BindView(R.id.wv_auth_page)
     WebView webView;
     @BindView(R.id.progressbar)
@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Route
 
     private Unbinder unbinder;
     private boolean hasUrlLoaded;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,19 +101,22 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Route
         settings.setSupportZoom(false);
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
-        webViewClient = new WebViewClient() {
+        webViewClient =  new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Log.e("url", url);
                 String code = "";
                 hasUrlLoaded = true;
+
                 if (url.contains("?code=")) {
                     if (url.contains("&scope")) {
                         code = url.substring(url.indexOf("?code=") + 6, url.indexOf("&"));
                     } else {
                         code = url.substring(url.indexOf("?code=") + 6, url.length());
                     }
+
                     presenter.onInitialCodeReceived(code);
                     return true;
                 }
@@ -121,6 +125,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Route
         };
 
         webView.setWebViewClient(webViewClient);
+
+        hideProgressbar();
     }
 
     @Override
@@ -150,6 +156,12 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Route
     }
 
     @Override
+    public void setAuthResult(int result) {
+        setResult(result);
+        //finish()
+    }
+
+    @Override
     public void loadUrl(String url) {
         webView.loadUrl(url);
     }
@@ -164,13 +176,4 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Route
         return hasUrlLoaded;
     }
 
-    /*@Deprecated
-    private void testYandexPay() {
-        PaymentParams phoneParams = PhoneParams.newInstance("79012345678", new BigDecimal(100.0));
-        Intent intent = PaymentActivity.getBuilder(this)
-                .setPaymentParams(phoneParams)
-                .setClientId(Config.YANDEX_MONEY_CLIENT_ID)
-                .build();
-        startActivityForResult(intent, 1);
-    }*/
 }

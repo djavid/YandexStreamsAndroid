@@ -22,4 +22,14 @@ public class PreferencesWrapper {
                 .edit()
                 .putString(authType, token).apply();
     }
+
+    public String getDeviceId(String key) {
+        return sharedPreferences.getString(key, "");
+    }
+
+    public void setDeviceId(String key, String id) {
+        sharedPreferences
+                .edit()
+                .putString(key, id).apply();
+    }
 }

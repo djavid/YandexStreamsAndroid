@@ -55,7 +55,7 @@ public class LoginPresenterImpl
                         postData = "client_id=" + URLEncoder.encode(Config.YANDEX_MONEY_CLIENT_ID, "UTF-8")
                                 + "&redirect_uri=" + URLEncoder.encode(Config.WEB_APP_REDIRECT_URI, "UTF-8")
                                 + "&grant_type=" + URLEncoder.encode("authorisation", "UTF-8")
-                                + "&scope=" + URLEncoder.encode("account-info payment-shop money-source(\"wallet\",\"card\")", "UTF-8")
+                                + "&scope=" + URLEncoder.encode("account-info payment-p2p money-source(\"wallet\",\"card\")", "UTF-8")
                                 + "&response_type=" + URLEncoder.encode("code", "UTF-8");
                         getView().postUrl(url, postData.getBytes());
                     } catch (UnsupportedEncodingException e) {
@@ -93,11 +93,14 @@ public class LoginPresenterImpl
                 .compose(RxUtils.applyCompletableSchedulers())
                 .subscribe(() -> {
                             if (getView() != null) {
+                                getView().setAuthResult(-1); //OK
+
                                 getView().dispose();
                             }
                         },
                         throwable -> {
                             if (getView() != null) {
+                                getView().setAuthResult(0); //CANCELED
                                 getView().hideProgressbar();
                                 getView().showError(
                                         ThrowableToStringIdConverter.convert(throwable));

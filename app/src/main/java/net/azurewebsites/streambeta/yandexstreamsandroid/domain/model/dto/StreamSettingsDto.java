@@ -12,7 +12,7 @@ public class StreamSettingsDto {
 
     @SerializedName("stream_id")
     @Expose
-    private long streamId;
+    private int streamId;
     @SerializedName("logo")
     @Expose
     private String logo;
@@ -29,11 +29,12 @@ public class StreamSettingsDto {
     @Expose
     private int minSum;
 
-    public long getStreamId() {
+
+    public int getStreamId() {
         return streamId;
     }
 
-    public void setStreamId(long streamId) {
+    public void setStreamId(int streamId) {
         this.streamId = streamId;
     }
 
