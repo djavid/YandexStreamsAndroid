@@ -1,7 +1,6 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -15,35 +14,17 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.zxing.common.StringUtils;
-import com.yandex.money.api.authorization.AuthorizationParameters;
-import com.yandex.money.api.methods.InstanceId;
-import com.yandex.money.api.methods.payment.RequestPayment;
-import com.yandex.money.api.methods.payment.params.P2pTransferParams;
-import com.yandex.money.api.methods.payment.params.PaymentParams;
-import com.yandex.money.api.net.ApiRequest;
-import com.yandex.money.api.net.clients.ApiClient;
-import com.yandex.money.api.net.clients.DefaultApiClient;
-import com.yandex.money.api.util.Responses;
-
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.view.BaseFragment;
-import net.azurewebsites.streambeta.yandexstreamsandroid.core.view.DonateFragmentView;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.App;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.Config;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.DonateFragmentView;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamSettingsDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.instancestate.DonateFragmentPresenterInstanceState;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.DonateFragmentPresenter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.ScreenTag;
 import net.azurewebsites.streambeta.yandexstreamsandroid.util.GlideUtils;
-import net.azurewebsites.streambeta.yandexstreamsandroid.util.RxUtils;
-
-import java.math.BigDecimal;
 
 import butterknife.BindView;
-import io.reactivex.Flowable;
-import io.reactivex.Single;
 
 
 public class DonateFragment extends BaseFragment implements DonateFragmentView {

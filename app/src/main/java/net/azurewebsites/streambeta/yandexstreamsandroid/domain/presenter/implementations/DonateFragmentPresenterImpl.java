@@ -3,7 +3,6 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.imple
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-import com.google.gson.Gson;
 import com.yandex.money.api.methods.payment.BaseProcessPayment;
 import com.yandex.money.api.methods.payment.BaseRequestPayment;
 import com.yandex.money.api.methods.payment.ProcessPayment;
@@ -13,7 +12,7 @@ import com.yandex.money.api.methods.payment.params.PaymentParams;
 import com.yandex.money.api.net.clients.ApiClient;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.BasePresenter;
-import net.azurewebsites.streambeta.yandexstreamsandroid.core.view.DonateFragmentView;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.DonateFragmentView;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.App;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.DonateFragmentInteractor;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.DonateFragmentUseCase;
@@ -22,7 +21,6 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.Stream
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.instancestate.DonateFragmentPresenterInstanceState;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.DonateFragmentPresenter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.ScreenTag;
 import net.azurewebsites.streambeta.yandexstreamsandroid.util.RxUtils;
 import net.azurewebsites.streambeta.yandexstreamsandroid.util.ThrowableToStringIdConverter;
 
@@ -62,29 +60,28 @@ public class DonateFragmentPresenterImpl
     public void loadStreamSettings(int stream_id) {
         if (getView() != null) {
             getView().showProgressbar();
-
-            if (!disposable.isDisposed())
-                disposable.dispose();
-
-            disposable = donateFragmentInteractor.getStreamSettings(stream_id)
-                    .compose(RxUtils.applySingleSchedulers())
-                    .retry(2l)
-                    .subscribe(
-                            (model) -> {
-                                streamSettingsDto = model;
-
-                                if (getView() != null) {
-                                    getView().setStreamSettings(model);
-                                    getView().hideProgressbar();
-                                } else {
-                                    setInstanceState(new DonateFragmentPresenterInstanceState(model));
-                                }
-                            },
-                            (Throwable) -> {
-                                getView().showError(ThrowableToStringIdConverter.convert(Throwable));
-                            });
-
         }
+
+        if (!disposable.isDisposed())
+            disposable.dispose();
+
+        disposable = donateFragmentInteractor.getStreamSettings(stream_id)
+                .compose(RxUtils.applySingleSchedulers())
+                .retry(2l)
+                .subscribe(model -> {
+                            streamSettingsDto = model;
+
+                            if (getView() != null) {
+                                getView().setStreamSettings(model);
+                                getView().hideProgressbar();
+                            } else {
+                                setInstanceState(new DonateFragmentPresenterInstanceState(model));
+                            }
+                        },
+                        (Throwable) -> {
+                            getView().showError(ThrowableToStringIdConverter.convert(Throwable));
+                        });
+
     }
 
     @Override
@@ -97,7 +94,7 @@ public class DonateFragmentPresenterImpl
 
         System.out.println(getView().getStreamerId());
         PaymentParams paymentParams = new P2pTransferParams.Builder(getView().getStreamerId())
-                .setAmountDue(new BigDecimal((double)(getView().getSumText()/ 100)))
+                .setAmountDue(new BigDecimal((double) (getView().getSumText() / 100)))
                 .setLabel("yms")
                 .create();
 
@@ -115,21 +112,26 @@ public class DonateFragmentPresenterImpl
                         .subscribeOn(io.reactivex.schedulers.Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(response -> {
-                            getView().hideProgressbar();
+                                    getView().hideProgressbar();
 
-                            if (response.error != null) {
-                                System.out.println(response.error.toString());
-                            } else {
-                                System.out.println(response.toString());
-                                System.out.println("moneySource: " + response.moneySource.toString());
-                                System.out.println("balance: " + response.balance);
+                                    if (response.error != null) {
+                                        System.out.println(response.error.toString());
+                                    } else {
+                                        System.out.println(response.toString());
+                                        System.out.println("moneySource: " + response.moneySource.toString());
+                                        System.out.println("balance: " + response.balance);
 
-                                if (response.status == BaseRequestPayment.Status.SUCCESS) {
-                                    processPayment(response);
+                                        if (response.status == BaseRequestPayment.Status.SUCCESS) {
+                                            processPayment(response);
+                                        }
+                                    }
+
+                                }, error -> {
+                                    if (getView() != null) {
+                                        getView().showError(ThrowableToStringIdConverter.convert(error));
+                                    }
                                 }
-                            }
-
-                        });
+                        );
 
 
             } catch (Exception e) {
@@ -158,41 +160,46 @@ public class DonateFragmentPresenterImpl
                 .execute(new ProcessPayment.Request(requestPayment.requestId, null, "", "", "")))
                 .compose(RxUtils.applySingleSchedulers())
                 .subscribe(response -> {
-                    getView().hideProgressbar();
+                            getView().hideProgressbar();
 
-                    if (response.error != null) {
-                        System.out.println("ProcessPayment: " + response.error.toString());
+                            if (response.error != null) {
+                                System.out.println("ProcessPayment: " + response.error.toString());
 
-                        AlertDialog.Builder alertDialog = getView().createDonateAlertDialog();
-                        alertDialog.setTitle("Оплата отменена");
-                        alertDialog.setMessage(response.error.toString());
-                        alertDialog.setPositiveButton("Закрыть", (dialog, which) -> {
-                            dialog.cancel();
-                        });
-                        alertDialog.show();
+                                AlertDialog.Builder alertDialog = getView().createDonateAlertDialog();
+                                alertDialog.setTitle("Оплата отменена");
+                                alertDialog.setMessage(response.error.toString());
+                                alertDialog.setPositiveButton("Закрыть", (dialog, which) -> {
+                                    dialog.cancel();
+                                });
+                                alertDialog.show();
 
-                    } else {
-                        System.out.println(response.toString());
+                            } else {
+                                System.out.println(response.toString());
 
-                        if (response.status == BaseProcessPayment.Status.SUCCESS) {
-                            //send donation
+                                if (response.status == BaseProcessPayment.Status.SUCCESS) {
+                                    //send donation
+                                    if (getView() != null) {
+                                        DonationDto donationDto = new DonationDto();
+                                        donationDto.setOperation_id(response.paymentId);
+                                        donationDto.setStream_id(streamSettingsDto.getStreamId());
+                                        donationDto.setStreamer_id(getView().getStreamerId());
+                                        donationDto.setType("text");
+                                        donationDto.setText_data(getView().getDonateText());
+                                        donationDto.setAmount(getView().getSumText());
+                                        donationDto.setSender(getView().getNicknameText());
+                                        donationDto.setUser_id(App.getAppInstance().getPreferencesWrapper()
+                                                .getDeviceId("device_id"));
+
+                                        sendDonationWithId(donationDto);
+                                    }
+                                }
+                            }
+                        }, error -> {
                             if (getView() != null) {
-                                DonationDto donationDto = new DonationDto();
-                                donationDto.setOperation_id(response.paymentId);
-                                donationDto.setStream_id(streamSettingsDto.getStreamId());
-                                donationDto.setStreamer_id(getView().getStreamerId());
-                                donationDto.setType("text");
-                                donationDto.setText_data(getView().getDonateText());
-                                donationDto.setAmount(getView().getSumText());
-                                donationDto.setSender(getView().getNicknameText());
-                                donationDto.setUser_id(App.getAppInstance().getPreferencesWrapper()
-                                        .getDeviceId("device_id"));
-
-                                sendDonationWithId(donationDto);
+                                getView().showError(ThrowableToStringIdConverter.convert(error));
                             }
                         }
-                    }
-                });
+                );
 
     }
 
@@ -217,9 +224,11 @@ public class DonateFragmentPresenterImpl
                     });
                     alert.show();
 
-                }, exception -> {
-                    getView().hideProgressbar();
-
+                }, error -> {
+                    if (getView() != null) {
+                        getView().hideProgressbar();
+                        getView().showError(ThrowableToStringIdConverter.convert(error));
+                    }
                 });
     }
 

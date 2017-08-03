@@ -34,4 +34,8 @@
     <!-- History fragment -->
     <string name="title_history_toolbar">История</string>
 
+    <!-- Gamecode fragment -->
+    <string name="gamecode_permission_warning">Необходимо разрешить доступ к камере.</string>
+    <string name="gamecode_permission_btn">Разрешить</string>
+
 </resources>

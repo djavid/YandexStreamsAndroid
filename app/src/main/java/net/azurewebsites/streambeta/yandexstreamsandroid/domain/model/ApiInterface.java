@@ -38,6 +38,9 @@ public interface ApiInterface {
     Single<List<StreamFeedItemDto>> getStreamFeedForQuery(
             @Query("req") String query, @Query("limit") int size, @Query("offset") int offset);
 
-    @GET("https://www.yastream.win/api/Streams/GetOnlineSettings")
+    @GET("/api/Streams/GetOnlineSettings")
     Single<StreamSettingsDto> getStreamSettings(@Query("stream_id") int stream_id);
+
+    @GET("/api/Streams")
+    Single<StreamFeedItemDto> getStreamByUrl(@Query("url") String url);
 }

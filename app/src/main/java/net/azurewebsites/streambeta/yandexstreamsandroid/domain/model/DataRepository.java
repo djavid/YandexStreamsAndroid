@@ -21,4 +21,5 @@ public interface DataRepository{
     Completable sendDonationWithId(DonationDto donation);
     Single<List<StreamFeedItemDto>> getStreamFeedForQuery(String query, int offset);
     Single<StreamSettingsDto> getStreamSettings(int stream_id);
+    Single<StreamFeedItemDto> getStreamByUrl(String url);
 }

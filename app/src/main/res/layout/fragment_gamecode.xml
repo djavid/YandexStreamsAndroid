@@ -1,14 +1,48 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gamecode_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="MissingPrefix, ContentDescription"
     tools:context="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.GamecodeFragment">
 
 
-    <com.dlazaro66.qrcodereaderview.QRCodeReaderView
-        android:id="@+id/qrdecoderview"
+    <LinearLayout
+        android:id="@+id/gamecode_permission"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:textColor="@color/colorPermissionWarning"
+            android:text="@string/gamecode_permission_warning"
+            fontPath="minecraft.ttf"/>
+
+        <Button
+            android:id="@+id/btn_allow_permission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textSize="16sp"
+            android:background="@color/colorPermissionBtnBackground"
+            android:textColor="@color/colorPermissionBtnText"
+            android:text="@string/gamecode_permission_btn"
+            fontPath="minecraft.ttf"/>
+
+    </LinearLayout>
+
+
+    <include layout="@layout/view_progressbar"
+        android:visibility="invisible"/>
 
 </FrameLayout>

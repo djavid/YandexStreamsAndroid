@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     }
 
 
-    private void changeFragment(Fragment fragment, String tag, boolean addBackStack) {
+    public void changeFragment(Fragment fragment, String tag, boolean addBackStack) {
 
         //KeyboardUtils.hideKeyboard(this); TODO
 

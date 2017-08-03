@@ -1,34 +1,35 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.PointF;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.URLUtil;
 
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
-import com.google.zxing.Result;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
+import net.azurewebsites.streambeta.yandexstreamsandroid.core.view.BaseFragment;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.GamecodeFragmentPresenter;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.activity.MainActivity;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.GamecodeFragmentView;
 
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
-
-import static android.content.ContentValues.TAG;
+import butterknife.BindView;
 
 
-public class GamecodeFragment extends Fragment implements QRCodeReaderView.OnQRCodeReadListener {
+public class GamecodeFragment extends BaseFragment
+        implements QRCodeReaderView.OnQRCodeReadListener, GamecodeFragmentView {
 
-    private QRCodeReaderView qrCodeReaderView;
+
+    QRCodeReaderView qrCodeReaderView;
+    GamecodeFragmentPresenter presenter;
+    private ViewGroup mainLayout;
 
 
     public GamecodeFragment() { }
@@ -42,18 +43,80 @@ public class GamecodeFragment extends Fragment implements QRCodeReaderView.OnQRC
     }
 
     @Override
+    public int getLayoutId() {
+        return R.layout.fragment_gamecode;
+    }
+
+    @Override
+    public String getPresenterId() {
+        return "gamecode_fragment";
+    }
+
+    @Override
+    public void onStart() {
+        presenter = getPresenter(GamecodeFragmentPresenter.class);
+        presenter.setView(this);
+        presenter.setRouter((MainRouter) getActivity());
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        presenter.setView(null);
+    }
+
+    @Override
+    public View setupView(View view) {
+        mainLayout = (ViewGroup) view.findViewById(R.id.gamecode_main_layout);
+
+        view.findViewById(R.id.btn_allow_permission).setOnClickListener(v -> {
+            requestPermissions();
+        });
+
+        if (!isCameraPermissionGranted()) {
+            requestPermissions();
+        } else {
+            initQrCodeReaderView();
+        }
+
+        return view;
+    }
+
+    @Override
+    public void loadData() {
+
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    private void requestPermissions() {
+        RxPermissions rxPermissions = new RxPermissions(getActivity());
+        rxPermissions
+                .request(Manifest.permission.CAMERA)
+                .subscribe(granted -> {
+                    if (granted) {
+                        initQrCodeReaderView();
+                    }
+                });
+    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_gamecode, container, false);
+    private void initQrCodeReaderView() {
 
-        qrCodeReaderView = (QRCodeReaderView) view.findViewById(R.id.qrdecoderview);
+        mainLayout.findViewById(R.id.gamecode_permission).setVisibility(View.GONE);
+
+        qrCodeReaderView = new QRCodeReaderView(getContext());
+        qrCodeReaderView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        qrCodeReaderView.setId(R.id.qrdecoderview);
+        mainLayout.addView(qrCodeReaderView);
+
+
+        qrCodeReaderView = (QRCodeReaderView) mainLayout.findViewById(R.id.qrdecoderview);
         qrCodeReaderView.setOnQRCodeReadListener(this);
 
         // Use this function to enable/disable decoding
@@ -71,30 +134,64 @@ public class GamecodeFragment extends Fragment implements QRCodeReaderView.OnQRC
         // Use this function to set back camera preview
         qrCodeReaderView.setBackCamera();
 
-        return view;
+        qrCodeReaderView.startCamera();
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        qrCodeReaderView.startCamera();
+        if (isCameraPermissionGranted()) {
+            qrCodeReaderView.startCamera();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        qrCodeReaderView.stopCamera();
+        if (isCameraPermissionGranted()) {
+            qrCodeReaderView.stopCamera();
+        }
     }
 
     @Override
     public void onQRCodeRead(String text, PointF[] points) {
-        System.out.println(text);
 
         if (URLUtil.isValidUrl(text) && text.contains("twitch")) {
+            System.out.println(text);
 
+            presenter.loadStreamByUrl(text);
         }
     }
 
+    @Override
+    public void openDonateFragment(int streamId, String streamName, String streamer_id) {
+        Fragment donateFragment = DonateFragment.newInstance(streamId, streamName, streamer_id);
+        ((MainActivity) getActivity()).changeFragment(donateFragment, "TAG_DONATE", true);
+    }
+
+    @Override
+    public void showProgressbar() {
+        super.showProgressbar();
+
+        if (qrCodeReaderView != null) {
+            qrCodeReaderView.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void hideProgressbar() {
+        super.hideProgressbar();
+
+        if (qrCodeReaderView != null) {
+            qrCodeReaderView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public boolean isCameraPermissionGranted() {
+        return ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED;
+    }
 }

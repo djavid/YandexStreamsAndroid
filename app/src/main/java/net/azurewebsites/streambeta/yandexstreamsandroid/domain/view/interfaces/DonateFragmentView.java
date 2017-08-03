@@ -1,4 +1,4 @@
-package net.azurewebsites.streambeta.yandexstreamsandroid.core.view;
+package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces;
 
 import android.app.AlertDialog;
 

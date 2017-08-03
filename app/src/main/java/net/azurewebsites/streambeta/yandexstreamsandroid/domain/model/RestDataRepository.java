@@ -48,4 +48,9 @@ public class RestDataRepository implements DataRepository {
     public Single<StreamSettingsDto> getStreamSettings(int stream_id) {
         return apiInterface.getStreamSettings(stream_id);
     }
+
+    @Override
+    public Single<StreamFeedItemDto> getStreamByUrl(String url) {
+        return apiInterface.getStreamByUrl(url);
+    }
 }

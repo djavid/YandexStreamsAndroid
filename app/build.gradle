@@ -51,6 +51,9 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 
+    //rx permissions
+    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
+
     //rx binding
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
 

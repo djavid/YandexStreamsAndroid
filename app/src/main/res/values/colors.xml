@@ -35,4 +35,9 @@
     <color name="translucent_scrim_bottom">#aa000000</color>
     <color name="translucent_scrim_bottom_center">#aa000000</color>
 
+    <!-- Gamecode fragment -->
+    <color name="colorPermissionWarning">#979797</color>
+    <color name="colorPermissionBtnBackground">#f3c647</color>
+    <color name="colorPermissionBtnText">#29292c</color>
+
 </resources>
