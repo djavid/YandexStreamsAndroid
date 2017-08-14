@@ -32,23 +32,43 @@
             fontPath="minecraft.ttf"
             android:text="@string/title_profile_toolbar"/>
 
-        <TextView
-            android:id="@+id/tv_toolbar_balance"
+        <FrameLayout
+            android:id="@+id/fl_toolbar_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/tv_toolbar"
-            android:textSize="16.7sp"
-            android:layout_marginBottom="6dp"
-            android:textAlignment="center"
-            android:textColor="@color/colorToolbarBalance"
-            fontPath="minecraft.ttf"
-            android:text="@string/title_profile_login" />
+            android:layout_above="@+id/tv_toolbar"
+            android:layout_marginBottom="6dp">
+
+            <TextView
+                android:id="@+id/tv_toolbar_login"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16.7sp"
+                android:textAlignment="center"
+                android:textColor="@color/colorToolbarBalance"
+                fontPath="minecraft.ttf"
+                android:text="@string/title_profile_login" />
+
+            <TextView
+                android:id="@+id/tv_toolbar_balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:textSize="16.7sp"
+                android:textAlignment="center"
+                android:textColor="@color/colorToolbarBalance"
+                fontPath="minecraft.ttf"
+                android:text="3 467.00 руб." />
+
+        </FrameLayout>
+
 
         <ImageView
             android:id="@+id/iv_toolbar_avatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/tv_toolbar_balance"
+            android:layout_above="@id/fl_toolbar_buttons"
             android:layout_marginBottom="6dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/group" />
@@ -56,6 +76,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/ll_profile_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="22dp"
@@ -183,6 +204,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_exit_button"
             android:layout_width="match_parent"
             android:layout_height="43.3dp"
             android:layout_marginTop="27dp"
@@ -194,7 +216,7 @@
                 android:layout_width="43.3dp"
                 android:layout_height="43.3dp"
                 android:tint="@color/colorProfileLinks"
-                app:srcCompat="@drawable/ic_settings"/>
+                app:srcCompat="@drawable/log_out"/>
 
             <TextView
                 android:id="@+id/tv_exit"
@@ -213,6 +235,9 @@
         </RelativeLayout>
 
     </LinearLayout>
+
+    <include layout="@layout/view_progressbar"
+        android:visibility="invisible"/>
 
 
 </LinearLayout>

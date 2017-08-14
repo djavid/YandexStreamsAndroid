@@ -3,40 +3,44 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
+import net.azurewebsites.streambeta.yandexstreamsandroid.core.view.BaseFragment;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.ProfilePresenter;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.ScreenTag;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.ProfileView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ProfileFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ProfileFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.math.BigDecimal;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+import butterknife.BindView;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
+
+public class ProfileFragment extends BaseFragment implements ProfileView {
+
+    @BindView(R.id.tv_toolbar_login)
+    TextView tv_toolbar_login;
+    @BindView(R.id.tv_toolbar_balance)
+    TextView tv_toolbar_balance;
+    @BindView(R.id.rl_exit_button)
+    RelativeLayout rl_exit_button;
+    @BindView(R.id.rl_toolbar)
+    RelativeLayout rl_toolbar;
+    @BindView(R.id.ll_profile_buttons)
+    LinearLayout ll_profile_buttons;
+
+    ProfilePresenter presenter;
     private OnFragmentInteractionListener mListener;
 
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
 
+    public ProfileFragment() { }
 
     public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
@@ -47,27 +51,79 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public int getLayoutId() {
+        return R.layout.fragment_profile;
+    }
+
+    @Override
+    public String getPresenterId() {
+        return "profile";
+    }
+
+    @Override
+    public void onStart() {
+        presenter = getPresenter(ProfilePresenter.class);
+        presenter.setView(this);
+        presenter.setRouter((MainRouter) getActivity());
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        presenter.setView(null);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!presenter.isAuthorised()) {
+            setUnauthorisedMode();
+        } else {
+            setAuthorisedMode();
+            presenter.getAccountInfo();
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+    public View setupView(View view) {
+        tv_toolbar_login.setOnClickListener(v -> {
+            presenter.getRouter().goToScreen(ScreenTag.AUTH_YANDEX_MONEY);
+        });
 
-
-//        Toolbar toolbar = (Toolbar) view.findViewById(R.id.profile_toolbar);
-//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        rl_exit_button.setOnClickListener(v -> {
+            presenter.unauthorise();
+        });
 
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    @Override
+    public void loadData() {
+
+    }
+
+    @Override
+    public void setUnauthorisedMode() {
+        rl_exit_button.setVisibility(GONE);
+        tv_toolbar_balance.setVisibility(GONE);
+        tv_toolbar_login.setVisibility(VISIBLE);
+    }
+
+    @Override
+    public void setAuthorisedMode() {
+        rl_exit_button.setVisibility(VISIBLE);
+        tv_toolbar_balance.setVisibility(VISIBLE);
+        tv_toolbar_login.setVisibility(GONE);
+    }
+
+    @Override
+    public void setBalance(BigDecimal amount) {
+        tv_toolbar_balance.setText(String.format(getString(R.string.string_profile_balance), amount));
+        //TODO преобразования числа
+    }
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -91,18 +147,21 @@ public class ProfileFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void showProgressbar() {
+        super.showProgressbar();
+        rl_toolbar.setVisibility(GONE);
+        ll_profile_buttons.setVisibility(GONE);
+    }
+
+    @Override
+    public void hideProgressbar() {
+        super.hideProgressbar();
+        rl_toolbar.setVisibility(VISIBLE);
+        ll_profile_buttons.setVisibility(VISIBLE);
     }
 }

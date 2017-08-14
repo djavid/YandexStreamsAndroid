@@ -4,6 +4,7 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.mappe
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.DataRepository;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.RestDataRepository;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamFeedItemDto;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.twitch.Stream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,27 @@ public class StreamFeedUseCase implements StreamFeedInteractor {
                         model.setImageUrl("http://streambeta.azurewebsites.net/api/images?id="
                                 + dto.getStreamId() + "&type=logo");
                         model.setStreamer_id(dto.getStreamerId());
+                        models.add(model);
+                    }
+                    return models;
+                });
+    }
+
+    @Override
+    public Single<List<StreamFeedItemModel>> getFollowedStreams(String stream_type, int limit,
+                                                                int offset, String access_token) {
+
+        return dataRepository.getFollowedStreams(stream_type, limit, offset, access_token)
+                .map((list) -> {
+
+                    List<StreamFeedItemModel> models = new ArrayList<>();
+                    for (Stream dto : list.getStreams()) {
+                        StreamFeedItemModel model = new StreamFeedItemModel();
+                        model.setId(dto.getId());
+                        model.setDescription(dto.getChannel().getStatus());
+                        model.setName(dto.getChannel().getName());
+                        model.setImageUrl(dto.getChannel().getProfileBanner());
+                        model.setStreamer_id(Long.toString(dto.getChannel().getId()));
                         models.add(model);
                     }
                     return models;

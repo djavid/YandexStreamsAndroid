@@ -57,7 +57,7 @@ public class DonateFragmentPresenterImpl
     }
 
     @Override
-    public void loadStreamSettings(int stream_id) {
+    public void loadStreamSettings(long stream_id) {
         if (getView() != null) {
             getView().showProgressbar();
         }

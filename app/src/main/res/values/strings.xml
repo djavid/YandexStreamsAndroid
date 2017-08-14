@@ -10,6 +10,8 @@
     <string name="title_search_toolbar_hint">ПОИСК</string>
     <string name="title_search_toolbar">Мои подписки</string>
     <string name="title_search_toolbar_results">Результаты поиска</string>
+    <string name="search_permission_warning">Войдите в аккаунт Twitch, чтобы видеть подписки.</string>
+    <string name="search_permission_btn">Войти</string>
 
     <!-- Profile fragment -->
     <string name="title_profile_toolbar">Мой профиль</string>
@@ -18,6 +20,7 @@
     <string name="title_profile_notification">Уведомления</string>
     <string name="title_profile_exit">Выход</string>
     <string name="title_profile_login">Войти</string>
+    <string name="string_profile_balance">%1$.2f руб.</string>
 
     <!-- Donate fragment -->
     <string name="title_donate_edittext_nick">Введите никнейм</string>

@@ -5,6 +5,8 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.Access
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.DonationDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamFeedItemDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamSettingsDto;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.twitch.Stream;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.twitch.TwitchFollowsDto;
 
 import java.util.List;
 
@@ -20,6 +22,9 @@ public interface DataRepository{
     Single<AccessTokenResponse> getUserCode(AccessTokenRequest request);
     Completable sendDonationWithId(DonationDto donation);
     Single<List<StreamFeedItemDto>> getStreamFeedForQuery(String query, int offset);
-    Single<StreamSettingsDto> getStreamSettings(int stream_id);
+    Single<StreamSettingsDto> getStreamSettings(long stream_id);
     Single<StreamFeedItemDto> getStreamByUrl(String url);
+    Single<TwitchFollowsDto> getFollowedStreams(String stream_type, int limit, int offset,
+                                                String access_token);
+    Completable revokeYandexAccessKey(String access_token);
 }

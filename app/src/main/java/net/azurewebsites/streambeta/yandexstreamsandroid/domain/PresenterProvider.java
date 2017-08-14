@@ -6,6 +6,7 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.core.View;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.DonateFragmentPresenterImpl;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.GamecodeFragmentPresenterImpl;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.LoginPresenterImpl;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.ProfilePresenterImpl;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.StreamFeedPresenterImpl;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.instancestate.LoginPresenterInstanceState;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.LoginView;
@@ -44,6 +45,9 @@ public class PresenterProvider {
                 break;
             case "gamecode_fragment":
                 presenterMap.put(presenterId, new GamecodeFragmentPresenterImpl());
+                break;
+            case "profile":
+                presenterMap.put(presenterId, new ProfilePresenterImpl());
                 break;
         }
     }

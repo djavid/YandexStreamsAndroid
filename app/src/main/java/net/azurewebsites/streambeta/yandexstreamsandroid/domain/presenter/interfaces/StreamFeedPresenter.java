@@ -12,6 +12,10 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.
 
 public interface StreamFeedPresenter
         extends Presenter<StreamFeedView, MainRouter, StreamFeedPresenterInstanceState> {
+
     void onQueryStringModified(String query);
     void onQrButtonPressed();
+    boolean isAuthorised();
+
+    void loadTwitchFeed();
 }

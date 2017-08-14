@@ -8,9 +8,6 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.Stream
 import io.reactivex.Completable;
 import io.reactivex.Single;
 
-/**
- * Created by djavid on 30.07.17.
- */
 
 public class DonateFragmentUseCase implements DonateFragmentInteractor {
 
@@ -25,7 +22,7 @@ public class DonateFragmentUseCase implements DonateFragmentInteractor {
     }
 
     @Override
-    public Single<StreamSettingsDto> getStreamSettings(int stream_id) {
+    public Single<StreamSettingsDto> getStreamSettings(long stream_id) {
         return dataRepository.getStreamSettings(stream_id);
     }
 

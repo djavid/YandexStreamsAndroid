@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
@@ -16,6 +18,7 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.mappe
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.instancestate.StreamFeedPresenterInstanceState;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.StreamFeedPresenter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.ScreenTag;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.adapter.StreamFeedRecyclerAdapter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.StreamFeedView;
 
@@ -38,6 +41,10 @@ public class StreamFeedFragment extends BaseFragment implements StreamFeedView {
     TextView tvToolbar;
     @BindView(R.id.rv_stream_list)
     RecyclerView rvStreamList;
+    @BindView(R.id.search_warning)
+    LinearLayout search_warning;
+    @BindView(R.id.btn_search_login)
+    Button btn_search_login;
 
     StreamFeedPresenter presenter;
 
@@ -76,16 +83,28 @@ public class StreamFeedFragment extends BaseFragment implements StreamFeedView {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        fixSearchBar();
+    }
+
+    @Override
     public View setupView(View view) {
         setupRecyclerView();
         ivQrButton.setOnClickListener(v -> presenter.onQrButtonPressed());
         setupSearchBar();
+
+        btn_search_login.setOnClickListener(v -> {
+            presenter.getRouter().goToScreen(ScreenTag.AUTH_TWITCH);
+        });
+
         return view;
     }
 
     @Override
     public void loadData() {
         presenter.onQueryStringModified("");
+        //TODO load twitch follow
     }
 
     private void setupRecyclerView() {
@@ -95,6 +114,7 @@ public class StreamFeedFragment extends BaseFragment implements StreamFeedView {
     }
 
     private void setupSearchBar() {
+
         etToolbar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -121,6 +141,24 @@ public class StreamFeedFragment extends BaseFragment implements StreamFeedView {
 
             }
         });
+    }
+
+    private void fixSearchBar() {
+        if (etToolbar.getText().toString().isEmpty()) {
+            ivSearchIcon.setVisibility(View.VISIBLE);
+            tvSearchHint.setVisibility(View.VISIBLE);
+            tvToolbar.setText(R.string.title_search_toolbar);
+            if (!presenter.isAuthorised()) showLoginWarning();
+            else hideLoginWarning();
+        } else {
+            ivSearchIcon.setVisibility(View.INVISIBLE);
+            tvSearchHint.setVisibility(View.INVISIBLE);
+            tvToolbar.setText(R.string.title_search_toolbar_results);
+            hideLoginWarning();
+
+            if (presenter != null)
+                presenter.onQueryStringModified(etToolbar.getText().toString());
+        }
     }
 
     @Override
@@ -162,4 +200,15 @@ public class StreamFeedFragment extends BaseFragment implements StreamFeedView {
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(StreamFeedItemModel item);
     }
+
+    public void showLoginWarning() {
+        search_warning.setVisibility(View.VISIBLE);
+        rvStreamList.setVisibility(View.GONE);
+    }
+
+    public void hideLoginWarning() {
+        search_warning.setVisibility(View.GONE);
+        rvStreamList.setVisibility(View.VISIBLE);
+    }
+
 }

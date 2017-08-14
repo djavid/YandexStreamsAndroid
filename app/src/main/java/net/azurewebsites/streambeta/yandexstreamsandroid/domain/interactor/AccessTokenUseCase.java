@@ -30,6 +30,7 @@ public class AccessTokenUseCase implements AccessTokenInteractor {
         List<String> scope = new ArrayList<>();
         scope.add("user_follows_edit");
         scope.add("user_read");
+
         return repository.getUserCode(
                 new AccessTokenRequest()
                         .withCode(initialCode)

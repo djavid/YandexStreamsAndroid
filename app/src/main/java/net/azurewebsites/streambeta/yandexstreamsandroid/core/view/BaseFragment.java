@@ -15,12 +15,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-/**
- * TODO add description
- */
 
 public abstract class BaseFragment extends Fragment
         implements net.azurewebsites.streambeta.yandexstreamsandroid.core.View {
+
 	@BindView(R.id.progressbar)
 	View progressbar;
 

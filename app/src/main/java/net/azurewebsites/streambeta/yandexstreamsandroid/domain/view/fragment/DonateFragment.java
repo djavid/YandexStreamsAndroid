@@ -72,7 +72,7 @@ public class DonateFragment extends BaseFragment implements DonateFragmentView {
     private static final String ARG_STREAM_ID = "id";
     private static final String ARG_STREAM_DESC = "name";
     private static final String ARG_STREAMER_ID = "streamer";
-    private int mParamId;
+    private long mParamId;
     private String mParamDesc;
     private String mParamStreamer;
 
@@ -101,11 +101,11 @@ public class DonateFragment extends BaseFragment implements DonateFragmentView {
     }
 
 
-    public static DonateFragment newInstance(int streamId, String streamName, String streamer_id) {
+    public static DonateFragment newInstance(long streamId, String streamName, String streamer_id) {
         DonateFragment fragment = new DonateFragment();
         Bundle args = new Bundle();
 
-        args.putInt(ARG_STREAM_ID, streamId);
+        args.putLong(ARG_STREAM_ID, streamId);
         args.putString(ARG_STREAM_DESC, streamName);
         args.putString(ARG_STREAMER_ID, streamer_id);
 
@@ -118,7 +118,7 @@ public class DonateFragment extends BaseFragment implements DonateFragmentView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParamId = getArguments().getInt(ARG_STREAM_ID);
+            mParamId = getArguments().getLong(ARG_STREAM_ID);
             mParamDesc = getArguments().getString(ARG_STREAM_DESC);
             mParamStreamer = getArguments().getString(ARG_STREAMER_ID);
         }

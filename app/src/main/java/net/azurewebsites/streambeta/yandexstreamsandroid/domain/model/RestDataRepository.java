@@ -1,11 +1,14 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.model;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.App;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.Config;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.AccessTokenRequest;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.AccessTokenResponse;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.DonationDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamFeedItemDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamSettingsDto;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.twitch.Stream;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.twitch.TwitchFollowsDto;
 
 import java.util.List;
 
@@ -45,12 +48,25 @@ public class RestDataRepository implements DataRepository {
     }
 
     @Override
-    public Single<StreamSettingsDto> getStreamSettings(int stream_id) {
+    public Single<StreamSettingsDto> getStreamSettings(long stream_id) {
         return apiInterface.getStreamSettings(stream_id);
     }
 
     @Override
     public Single<StreamFeedItemDto> getStreamByUrl(String url) {
         return apiInterface.getStreamByUrl(url);
+    }
+
+    @Override
+    public Single<TwitchFollowsDto> getFollowedStreams(String stream_type, int limit, int offset,
+                                                   String access_token) {
+
+        return apiInterface.getFollowedStreams(stream_type, limit, offset,
+                "application/vnd.twitchtv.v5+json", Config.TWITCH_CLIENT_ID, "OAuth " + access_token);
+    }
+
+    @Override
+    public Completable revokeYandexAccessKey(String access_token) {
+        return apiInterface.revokeYandexAccessKey("Bearer " + access_token);
     }
 }

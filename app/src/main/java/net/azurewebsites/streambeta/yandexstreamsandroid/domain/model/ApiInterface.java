@@ -5,6 +5,7 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.Access
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.DonationDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamFeedItemDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamSettingsDto;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.twitch.TwitchFollowsDto;
 
 import java.util.List;
 
@@ -15,12 +16,11 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HEAD;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
-
-/**
- * Created by Tetawex on 15.07.2017.
- */
 
 
 public interface ApiInterface {
@@ -39,8 +39,22 @@ public interface ApiInterface {
             @Query("req") String query, @Query("limit") int size, @Query("offset") int offset);
 
     @GET("/api/Streams/GetOnlineSettings")
-    Single<StreamSettingsDto> getStreamSettings(@Query("stream_id") int stream_id);
+    Single<StreamSettingsDto> getStreamSettings(@Query("stream_id") long stream_id);
 
     @GET("/api/Streams")
     Single<StreamFeedItemDto> getStreamByUrl(@Query("url") String url);
+
+    @GET("https://api.twitch.tv/kraken/streams/followed")
+    Single<TwitchFollowsDto> getFollowedStreams(
+            @Query("stream_type") String stream_type,
+            @Query("limit") int limit,
+            @Query("offset") int offset,
+            @Header("Accept") String accept,
+            @Header("Client-ID") String client_id,
+            @Header("Authorization") String access_token
+    );
+
+    @POST("https://money.yandex.ru/api/revoke")
+    Completable revokeYandexAccessKey(@Header("Authorization") String access_token);
+
 }

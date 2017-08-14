@@ -1,6 +1,7 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.BasePresenter;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.App;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.StreamFeedInteractor;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.StreamFeedUseCase;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.instancestate.StreamFeedPresenterInstanceState;
@@ -16,10 +17,8 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
+import retrofit2.HttpException;
 
-/**
- * Created by Tetawex on 29.07.2017.
- */
 
 public class StreamFeedPresenterImpl
         extends BasePresenter<StreamFeedView, MainRouter, StreamFeedPresenterInstanceState>
@@ -69,34 +68,74 @@ public class StreamFeedPresenterImpl
 
             if (query == null || query.isEmpty()) {
                 loadGenericFeed();
-            } else
+                if (!isAuthorised()) getView().showLoginWarning();
+            } else {
                 loadFeedWithQuery(query);
+                getView().hideLoginWarning();
+            }
         }
     }
 
     private void loadGenericFeed() {
-        loadFeedWithQuery("");//temporary
+        //loadFeedWithQuery("");//temporary
+        loadTwitchFeed();
     }
 
     private void loadFeedWithQuery(String query) {
         disposable = streamFeedInteractor.getStreamFeedForQuery(query, offset)
                 .compose(RxUtils.applySingleSchedulers())
                 .retry(2L)
-                .subscribe((list) -> {
-                            if (getView() != null) {
-                                getView().appendFeed(list);
-                                getView().hideProgressbar();
-                            } else {
-                                getInstanceState().getData().addAll(list);
-                            }
-                        },
-                        (throwable) -> {
-                            getView().showError(ThrowableToStringIdConverter.convert(throwable));
-                        });
+                .subscribe(list -> {
+                    if (getView() != null) {
+                        getView().appendFeed(list);
+                        getView().hideProgressbar();
+                    } else {
+                        getInstanceState().getData().addAll(list);
+                    }
+                },
+                (throwable) -> {
+                    getView().showError(ThrowableToStringIdConverter.convert(throwable));
+                });
+    }
+
+    @Override
+    public void loadTwitchFeed() {
+        if (getView() != null) getView().showProgressbar();
+
+        disposable = streamFeedInteractor.getFollowedStreams("all", 20, 0,
+                App.getAppInstance().getPreferencesWrapper().getAuthToken("twitch"))
+                .compose(RxUtils.applySingleSchedulers())
+                .retry(2L)
+                .doOnError(Throwable::printStackTrace)
+                .subscribe(list -> {
+                    if (getView() != null) {
+                        getView().appendFeed(list);
+                        getView().hideProgressbar();
+                    } else {
+                        getInstanceState().getData().addAll(list);
+                    }
+                }, error -> {
+                    if (getView() != null) getView().hideProgressbar();
+
+                    if (error instanceof HttpException) {
+                        App.getAppInstance().getApiClient().setAccessToken("");
+                        App.getAppInstance().getPreferencesWrapper().setAuthToken("twitch", "");
+                        if (getView() != null) getView().showLoginWarning();
+                    } else {
+                        if (getView() != null)
+                            getView().showError(ThrowableToStringIdConverter.convert(error));
+                    }
+                });
     }
 
     @Override
     public void onQrButtonPressed() {
         getRouter().goToScreen(ScreenTag.QR_SCANNER);
     }
+
+    @Override
+    public boolean isAuthorised() {
+        return !App.getAppInstance().getPreferencesWrapper().getAuthToken("twitch").isEmpty();
+    }
+
 }

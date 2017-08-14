@@ -5,9 +5,6 @@ import android.app.AlertDialog;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.View;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamSettingsDto;
 
-/**
- * Created by djavid on 30.07.17.
- */
 
 public interface DonateFragmentView extends View {
     void setStreamSettings(StreamSettingsDto streamSettings);

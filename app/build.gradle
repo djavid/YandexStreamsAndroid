@@ -85,7 +85,7 @@ dependencies {
 
     //yandex money api
     compile 'com.yandex.money.api:yandex-money-sdk-android:4.0.4'
-    compile 'com.yandex.money.api:yandex-money-sdk-java:7.1.0'
+    compile 'com.yandex.money.api:yandex-money-sdk-java:7.1.1'
 
     //qr code scanner
     compile 'me.dm7.barcodescanner:zxing:1.9.5'

@@ -77,8 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
+                    android:windowSoftInputMode="stateAlwaysHidden"
                     android:inputType="text"
                     android:paddingEnd="20dp"
                     android:paddingLeft="20dp"
@@ -113,8 +112,44 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"
+            android:visibility="visible"
             tools:context="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.StreamFeedFragment"
             tools:listitem="@layout/recycleritem_stream" />
+
+        <LinearLayout
+            android:id="@+id/search_warning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:gravity="center"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:textColor="@color/colorWarningText"
+                android:text="@string/search_permission_warning"
+                fontPath="minecraft.ttf"/>
+
+            <Button
+                android:id="@+id/btn_search_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textSize="16sp"
+                android:background="@color/colorWarningBtnBackground"
+                android:textColor="@color/colorWarningBtnText"
+                android:text="@string/search_permission_btn"
+                fontPath="minecraft.ttf"/>
+
+        </LinearLayout>
 
         <include layout="@layout/view_progressbar"
             android:visibility="invisible"/>

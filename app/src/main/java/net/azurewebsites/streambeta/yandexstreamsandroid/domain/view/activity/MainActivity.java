@@ -1,29 +1,21 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.yandex.money.api.methods.payment.params.P2pTransferParams;
-import com.yandex.money.api.methods.payment.params.PaymentParams;
-
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.App;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.Config;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.mapped.StreamFeedItemModel;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.MainPresenter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
@@ -35,10 +27,8 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.St
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.MainView;
 import net.azurewebsites.streambeta.yandexstreamsandroid.util.RxUtils;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
-import ru.yandex.money.android.PaymentActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
@@ -123,8 +113,6 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
             }
         }
 
-        //goToScreen(ScreenTag.AUTH_TWITCH);
-
         if (App.getAppInstance().getPreferencesWrapper().getDeviceId("device_id").isEmpty()) {
             showProgressbar();
 
@@ -147,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
 
     public void changeFragment(Fragment fragment, String tag, boolean addBackStack) {
 
-        //KeyboardUtils.hideKeyboard(this); TODO
+        //KeyboardUtils.hideKeyboard(this); TODO hide keyboard
 
         Fragment existFragment = fragmentManager.findFragmentByTag(tag);
 
@@ -159,9 +147,16 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
             ft.commit();
             Log.w(TAG, tag + " added to the backstack");
         } else {
+            //if (existFragment.isAdded()) return;
             // fragment in back stack, call it back.
             FragmentTransaction ft = fragmentManager.beginTransaction();
+
+            //fragmentManager.popBackStackImmediate(tag, 0);
             ft.replace(R.id.content, existFragment, tag);
+            if (addBackStack) {
+                fragmentManager.popBackStack(tag, 0);
+                //ft.addToBackStack(tag);
+            }
             ft.commit();
             Log.w(TAG, tag + " fragment returned back from backstack");
         }
@@ -174,9 +169,10 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
 
         // if first fragment is not on screen, just pop back to the previous fragment.
         if (entryCount > 1) {
+
             fragmentManager.popBackStack();
 
-            String tag = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 2).getName();
+            String tag = fragmentManager.getBackStackEntryAt(entryCount - 2).getName();
 
             switch (tag) {
                 case TAG_SEARCH:
@@ -239,6 +235,9 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
                 startActivityForResult(intent, DONATE_FOR_RESULT);
                 break;
             }
+            case QR_SCANNER: {
+                changeFragment(gamecodeFragment, TAG_GAMECODE, true);
+            }
         }
     }
 
@@ -248,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     }
 
     @Override
-    public void goToStreamPage(int streamId, String streamDesc, String streamerId) {
+    public void goToStreamPage(long streamId, String streamDesc, String streamerId) {
         Fragment donateFragment = DonateFragment.newInstance(streamId, streamDesc, streamerId);
         changeFragment(donateFragment, TAG_DONATE, true);
     }
@@ -260,13 +259,7 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
 
     @Override
     public void onListFragmentInteraction(StreamFeedItemModel item) {
-//        startPaymentActivityForResult(
-//                new P2pTransferParams.Builder(Long.toString(item.getId()))
-//                        .setAmount(new BigDecimal(1))
-//                        .create()
-//        );
-
-        if (!isAuthorised()) {
+        if (!isYandexAuthorised()) {
             goToScreen(ScreenTag.AUTH_YANDEX_MONEY);
         } else {
             goToStreamPage(item.getId(), item.getDescription(), item.getStreamer_id());
@@ -280,13 +273,6 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
         if (resultCode == RESULT_OK) {
             App.getAppInstance().getApiClient().setAccessToken(App.getAppInstance()
                     .getPreferencesWrapper().getAuthToken("yandex_money"));
-
-//            System.out.println("RESULT_OK");
-//            Fragment curr_frag = getSupportFragmentManager().findFragmentById(R.id.content);
-//            if (curr_frag instanceof DonateFragment) {
-//                ((DonateFragment) curr_frag).getPresenter().requestPayment();
-//            }
-            //goToStreamPage(item.getId(), item.getDescription(), item.getStreamer_id());
         }
     }
 
@@ -295,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    public boolean isAuthorised() {
+    public boolean isYandexAuthorised() {
         return App.getAppInstance().getApiClient().isAuthorized();
     }
 }

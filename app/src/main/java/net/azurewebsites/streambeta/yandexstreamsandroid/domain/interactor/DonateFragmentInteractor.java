@@ -11,6 +11,6 @@ import io.reactivex.Single;
  */
 
 public interface DonateFragmentInteractor {
-    Single<StreamSettingsDto> getStreamSettings(int stream_id);
+    Single<StreamSettingsDto> getStreamSettings(long stream_id);
     Completable sendDonationWithId(DonationDto donation);
 }
