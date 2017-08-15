@@ -1,8 +1,5 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.core;
 
-/**
- * Created by tetawex on 11.07.17.
- */
 
 public abstract class BasePresenter<V extends View, R extends Router, I> implements Presenter<V, R, I>{
     private V view;
@@ -15,8 +12,7 @@ public abstract class BasePresenter<V extends View, R extends Router, I> impleme
         this.router = router;
     }
 
-    public BasePresenter() {
-    }
+    public BasePresenter() { }
 
     public abstract void onStart();
 

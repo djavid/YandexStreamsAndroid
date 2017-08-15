@@ -5,6 +5,7 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.Config;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.AccessTokenRequest;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.AccessTokenResponse;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.DonationDto;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.DonationHistoryDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamFeedItemDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamSettingsDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.twitch.Stream;
@@ -68,5 +69,10 @@ public class RestDataRepository implements DataRepository {
     @Override
     public Completable revokeYandexAccessKey(String access_token) {
         return apiInterface.revokeYandexAccessKey("Bearer " + access_token);
+    }
+
+    @Override
+    public Single<List<DonationHistoryDto>> getDonationsHistory(String id) {
+        return apiInterface.getDonationsHistory(id, "user");
     }
 }

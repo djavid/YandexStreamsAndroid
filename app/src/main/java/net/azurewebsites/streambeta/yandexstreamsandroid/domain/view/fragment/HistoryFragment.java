@@ -2,7 +2,6 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,62 +10,71 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
+import net.azurewebsites.streambeta.yandexstreamsandroid.core.view.BaseFragment;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.App;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.DonationHistoryDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.DonationModel;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.HistoryPresenter;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.adapter.HistoryRecyclerAdapter;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.HistoryView;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 
-public class HistoryFragment extends Fragment {
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
+public class HistoryFragment extends BaseFragment implements HistoryView {
 
-    private int mColumnCount = 1;
+    @BindView(R.id.rv_history_list)
+    RecyclerView rv_history_list;
+
+    HistoryPresenter presenter;
+    private HistoryRecyclerAdapter recyclerAdapter;
     private OnListFragmentInteractionListener mListener;
 
 
-    public HistoryFragment() {
-    }
-
-    @SuppressWarnings("unused")
-    public static HistoryFragment newInstance(int columnCount) {
-        HistoryFragment fragment = new HistoryFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public HistoryFragment() { }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View setupView(View view) {
+        setupRecyclerView();
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_history_list, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-
-            List<DonationModel> items = new ArrayList<>();
-            //TODO
-
-            recyclerView.setAdapter(new MyHistoryRecyclerViewAdapter(items, mListener));
-        }
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        presenter = getPresenter(HistoryPresenter.class);
+        presenter.setView(this);
+        presenter.setRouter((MainRouter) getActivity());
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        presenter.setView(null);
+    }
+
+    @Override
+    public void loadData() {
+        presenter.loadDonationsHistory(
+                App.getAppInstance().getPreferencesWrapper().getDeviceId("device_id"));
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_history_list;
+    }
+
+    @Override
+    public String getPresenterId() {
+        return "history";
     }
 
     @Override
@@ -87,6 +95,39 @@ public class HistoryFragment extends Fragment {
     }
 
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(DonationModel item);
+        void onListFragmentInteraction(DonationHistoryDto item);
+    }
+
+    @Override
+    public void showProgressbar() {
+        super.showProgressbar();
+        rv_history_list.setVisibility(GONE);
+    }
+
+    @Override
+    public void hideProgressbar() {
+        super.hideProgressbar();
+        rv_history_list.setVisibility(VISIBLE);
+    }
+
+    private void setupRecyclerView() {
+        recyclerAdapter = new HistoryRecyclerAdapter(getContext(), mListener);
+        rv_history_list.setAdapter(recyclerAdapter);
+        rv_history_list.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    @Override
+    public void scrollToPosition(int position) {
+        rv_history_list.scrollToPosition(position);
+    }
+
+    @Override
+    public void appendFeed(List<DonationHistoryDto> feed) {
+        recyclerAdapter.appendDataWithNotify(feed);
+    }
+
+    @Override
+    public void resetFeed() {
+        recyclerAdapter.clear();
     }
 }

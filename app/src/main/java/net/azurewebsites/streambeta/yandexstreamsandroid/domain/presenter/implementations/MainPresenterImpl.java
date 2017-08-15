@@ -7,9 +7,6 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRoute
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.ScreenTag;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.MainView;
 
-/**
- * Created by Tetawex on 15.07.2017.
- */
 
 public class MainPresenterImpl
         extends BasePresenter<MainView, MainRouter, MainPresenterInstanceState>

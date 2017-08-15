@@ -12,14 +12,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by Tetawex on 29.07.2017.
- * Recycler adapter template v2
- */
-
 
 public abstract class BaseRecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<VH> {
+
     protected Context context;
     protected LayoutInflater inflater;
     private List<T> data;

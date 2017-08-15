@@ -114,7 +114,7 @@
             app:layoutManager="LinearLayoutManager"
             android:visibility="visible"
             tools:context="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.StreamFeedFragment"
-            tools:listitem="@layout/recycleritem_stream" />
+            tools:listitem="@layout/recycler_item_stream" />
 
         <LinearLayout
             android:id="@+id/search_warning"

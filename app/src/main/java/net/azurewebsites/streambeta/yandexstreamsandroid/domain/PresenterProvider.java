@@ -5,6 +5,7 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.core.Router;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.View;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.DonateFragmentPresenterImpl;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.GamecodeFragmentPresenterImpl;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.HistoryPresenterImpl;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.LoginPresenterImpl;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.ProfilePresenterImpl;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.implementations.StreamFeedPresenterImpl;
@@ -14,9 +15,6 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Tetawex on 15.07.2017.
- */
 
 public class PresenterProvider {
     private Map<String, Presenter> presenterMap;
@@ -48,6 +46,9 @@ public class PresenterProvider {
                 break;
             case "profile":
                 presenterMap.put(presenterId, new ProfilePresenterImpl());
+                break;
+            case "history":
+                presenterMap.put(presenterId, new HistoryPresenterImpl());
                 break;
         }
     }

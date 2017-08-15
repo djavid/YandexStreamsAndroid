@@ -1,9 +1,5 @@
 package net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.mapped;
 
-/**
- * Created by djavid on 20.07.17.
- */
-
 
 public class StreamFeedItemModel {
 
@@ -11,11 +7,11 @@ public class StreamFeedItemModel {
     private String imageUrl;
     private String name;
     private String description;
-    private String audience;
+    private Long audience;
     private String streamer_id;
 
 
-    public StreamFeedItemModel(int id, String imageURL, String name, String description, String audience) {
+    public StreamFeedItemModel(int id, String imageURL, String name, String description, Long audience) {
         this.id = id;
         this.imageUrl = imageURL;
         this.name = name;
@@ -54,10 +50,10 @@ public class StreamFeedItemModel {
         this.description = description;
     }
 
-    public String getAudience() {
+    public Long getAudience() {
         return audience;
     }
-    public void setAudience(String audience) {
+    public void setAudience(Long audience) {
         this.audience = audience;
     }
 

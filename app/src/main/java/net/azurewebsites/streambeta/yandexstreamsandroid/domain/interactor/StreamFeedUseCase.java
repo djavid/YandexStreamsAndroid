@@ -30,16 +30,15 @@ public class StreamFeedUseCase implements StreamFeedInteractor {
     public Single<List<StreamFeedItemModel>> getStreamFeedForQuery(String query, int offset) {
         return dataRepository.getStreamFeedForQuery(query, offset)
                 .map((list) -> {
-                    //I can use flatmap and then map items one by one, but I don't care...
                     List<StreamFeedItemModel> models = new ArrayList<StreamFeedItemModel>();
                     for (StreamFeedItemDto dto : list) {
                         StreamFeedItemModel model = new StreamFeedItemModel();
                         model.setId(dto.getStreamId());
                         model.setDescription(dto.getName());
                         model.setName(dto.getChannel());
-                        model.setImageUrl("http://streambeta.azurewebsites.net/api/images?id="
-                                + dto.getStreamId() + "&type=logo");
+                        model.setImageUrl(dto.getLogo());
                         model.setStreamer_id(dto.getStreamerId());
+                        model.setAudience(dto.getViewers());
                         models.add(model);
                     }
                     return models;
@@ -61,6 +60,7 @@ public class StreamFeedUseCase implements StreamFeedInteractor {
                         model.setName(dto.getChannel().getName());
                         model.setImageUrl(dto.getChannel().getProfileBanner());
                         model.setStreamer_id(Long.toString(dto.getChannel().getId()));
+                        model.setAudience(dto.getViewers());
                         models.add(model);
                     }
                     return models;

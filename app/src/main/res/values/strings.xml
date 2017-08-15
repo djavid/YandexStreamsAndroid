@@ -12,6 +12,7 @@
     <string name="title_search_toolbar_results">Результаты поиска</string>
     <string name="search_permission_warning">Войдите в аккаунт Twitch, чтобы видеть подписки.</string>
     <string name="search_permission_btn">Войти</string>
+    <string name="string_stream_viewers">%1$d зрителей</string>
 
     <!-- Profile fragment -->
     <string name="title_profile_toolbar">Мой профиль</string>

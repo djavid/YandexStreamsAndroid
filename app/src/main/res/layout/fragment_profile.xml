@@ -81,12 +81,16 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="22dp"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="28.3dp"
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/rl_history_button"
             android:layout_width="match_parent"
             android:layout_height="43.3dp"
+            android:layout_marginTop="27dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
             <ImageView
@@ -126,6 +130,9 @@
             android:layout_width="match_parent"
             android:layout_height="43.3dp"
             android:layout_marginTop="27dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
             <ImageView
@@ -165,6 +172,9 @@
             android:layout_width="match_parent"
             android:layout_height="43.3dp"
             android:layout_marginTop="27dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
             <ImageView
@@ -208,6 +218,9 @@
             android:layout_width="match_parent"
             android:layout_height="43.3dp"
             android:layout_marginTop="27dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
             android:visibility="gone"
             android:orientation="horizontal">
 

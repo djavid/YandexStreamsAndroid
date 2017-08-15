@@ -3,6 +3,7 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.domain.model;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.AccessTokenRequest;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.AccessTokenResponse;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.DonationDto;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.DonationHistoryDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamFeedItemDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.StreamSettingsDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.twitch.TwitchFollowsDto;
@@ -29,6 +30,10 @@ public interface ApiInterface {
 
     @POST("api/donations")
     Completable sendDonationWithId(@Body DonationDto donation);
+
+    @GET("api/donations/GetAllDonations")
+    Single<List<DonationHistoryDto>> getDonationsHistory(
+            @Query("id") String id, @Query("type") String type);
 
     @FormUrlEncoded
     @POST("api/users")

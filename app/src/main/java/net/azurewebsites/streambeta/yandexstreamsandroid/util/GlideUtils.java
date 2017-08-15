@@ -5,9 +5,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-/**
- * Created by Tetawex on 29.07.2017.
- */
 
 public class GlideUtils {
     public static void loadImageIntoView(Context context, ImageView imageView, String url, int placeholderId) {

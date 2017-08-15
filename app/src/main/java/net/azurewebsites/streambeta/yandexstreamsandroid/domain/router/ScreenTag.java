@@ -5,5 +5,5 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.domain.router;
  */
 
 public enum ScreenTag {
-    STREAM_LIST, QR_SCANNER, USER_PROFILE, AUTH_TWITCH, AUTH_YANDEX_MONEY
+    STREAM_LIST, QR_SCANNER, USER_PROFILE, AUTH_TWITCH, AUTH_YANDEX_MONEY, HISTORY_LIST
 }

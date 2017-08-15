@@ -7,21 +7,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
-import net.azurewebsites.streambeta.yandexstreamsandroid.core.Router;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.view.BaseRecyclerAdapter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.mapped.StreamFeedItemModel;
-import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.StreamFeedFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.util.GlideUtils;
 
-import java.util.function.Consumer;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by Tetawex on 29.07.2017.
- */
 
 public class StreamFeedRecyclerAdapter
         extends BaseRecyclerAdapter<StreamFeedItemModel, StreamFeedRecyclerAdapter.ViewHolder> {
@@ -29,7 +24,8 @@ public class StreamFeedRecyclerAdapter
     private final StreamFeedFragment.OnListFragmentInteractionListener mListener;
 
 
-    public StreamFeedRecyclerAdapter(Context context, StreamFeedFragment.OnListFragmentInteractionListener mListener) {
+    public StreamFeedRecyclerAdapter(
+            Context context, StreamFeedFragment.OnListFragmentInteractionListener mListener) {
         super(context);
         this.mListener = mListener;
     }
@@ -38,11 +34,13 @@ public class StreamFeedRecyclerAdapter
     protected void bindSingleItem(ViewHolder holder, StreamFeedItemModel item) {
         holder.tvName.setText(item.getName());
         holder.tvDescription.setText(item.getDescription());
-        holder.tvViews.setText(item.getAudience());
-        GlideUtils.loadImageIntoView(context, holder.ivAvatar, item.getImageUrl(), R.color.colorToolbarBackground);
+        holder.tvViews.setText(String.format(context.getString(
+                R.string.string_stream_viewers), item.getAudience()));
+        GlideUtils.loadImageIntoView(context, holder.ivAvatar, item.getImageUrl(),
+                R.color.colorToolbarBackground);
 
         holder.view.setOnClickListener(v -> {
-            if (null != mListener) {
+            if (mListener != null) {
                 mListener.onListFragmentInteraction(item);
             }
         });
@@ -55,7 +53,7 @@ public class StreamFeedRecyclerAdapter
 
     @Override
     protected int getLayoutId() {
-        return R.layout.recycleritem_stream;
+        return R.layout.recycler_item_stream;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -69,7 +67,7 @@ public class StreamFeedRecyclerAdapter
         @BindView(R.id.tv_views)
         TextView tvViews;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             this.view = view;
             ButterKnife.bind(this, view);

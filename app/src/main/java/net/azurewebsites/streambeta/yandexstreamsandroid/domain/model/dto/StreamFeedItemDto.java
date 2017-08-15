@@ -3,9 +3,6 @@ package net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Tetawex on 28.07.2017.
- */
 
 public class StreamFeedItemDto {
 
@@ -30,11 +27,17 @@ public class StreamFeedItemDto {
     @SerializedName("channel")
     @Expose
     private String channel;
+    @SerializedName("viewers")
+    @Expose
+    private Long viewers;
+    @SerializedName("logo")
+    @Expose
+    private String logo;
+
 
     public Integer getStreamId() {
         return streamId;
     }
-
     public void setStreamId(Integer streamId) {
         this.streamId = streamId;
     }
@@ -42,7 +45,6 @@ public class StreamFeedItemDto {
     public String getStreamerId() {
         return streamerId;
     }
-
     public void setStreamerId(String streamerId) {
         this.streamerId = streamerId;
     }
@@ -50,7 +52,6 @@ public class StreamFeedItemDto {
     public String getStartDate() {
         return startDate;
     }
-
     public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
@@ -58,7 +59,6 @@ public class StreamFeedItemDto {
     public Object getEndDate() {
         return endDate;
     }
-
     public void setEndDate(Object endDate) {
         this.endDate = endDate;
     }
@@ -66,7 +66,6 @@ public class StreamFeedItemDto {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -74,7 +73,6 @@ public class StreamFeedItemDto {
     public String getUrl() {
         return url;
     }
-
     public void setUrl(String url) {
         this.url = url;
     }
@@ -82,9 +80,21 @@ public class StreamFeedItemDto {
     public String getChannel() {
         return channel;
     }
-
     public void setChannel(String channel) {
         this.channel = channel;
     }
 
+    public Long getViewers() {
+        return viewers;
+    }
+    public void setViewers(Long viewers) {
+        this.viewers = viewers;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
 }

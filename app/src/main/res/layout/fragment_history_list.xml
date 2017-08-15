@@ -36,12 +36,15 @@
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_history_fragment"
+        android:id="@+id/rv_history_list"
         android:name="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.HistoryFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
         tools:context="net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.HistoryFragment"
-        tools:listitem="@layout/fragment_history" />
+        tools:listitem="@layout/recycler_item_history" />
+
+    <include layout="@layout/view_progressbar"
+        android:visibility="invisible"/>
 
 </LinearLayout>

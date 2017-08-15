@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.view.BaseFragment;
@@ -35,6 +36,8 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
     RelativeLayout rl_toolbar;
     @BindView(R.id.ll_profile_buttons)
     LinearLayout ll_profile_buttons;
+    @BindView(R.id.rl_history_button)
+    RelativeLayout rl_history_button;
 
     ProfilePresenter presenter;
     private OnFragmentInteractionListener mListener;
@@ -96,6 +99,8 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
             presenter.unauthorise();
         });
 
+        rl_history_button.setOnClickListener(this::onHistoryButtonPressed);
+
         return view;
     }
 
@@ -109,6 +114,7 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
         rl_exit_button.setVisibility(GONE);
         tv_toolbar_balance.setVisibility(GONE);
         tv_toolbar_login.setVisibility(VISIBLE);
+        rl_history_button.setVisibility(GONE);
     }
 
     @Override
@@ -116,18 +122,13 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
         rl_exit_button.setVisibility(VISIBLE);
         tv_toolbar_balance.setVisibility(VISIBLE);
         tv_toolbar_login.setVisibility(GONE);
+        rl_history_button.setVisibility(VISIBLE);
     }
 
     @Override
     public void setBalance(BigDecimal amount) {
         tv_toolbar_balance.setText(String.format(getString(R.string.string_profile_balance), amount));
         //TODO преобразования числа
-    }
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -164,4 +165,11 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
         rl_toolbar.setVisibility(VISIBLE);
         ll_profile_buttons.setVisibility(VISIBLE);
     }
+
+    public void onHistoryButtonPressed(View v) {
+        if (presenter.isAuthorised()) {
+            ((MainRouter) getActivity()).goToScreen(ScreenTag.HISTORY_LIST);
+        }
+    }
+
 }

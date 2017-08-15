@@ -17,11 +17,13 @@ import android.view.MenuItem;
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.App;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.interactor.mapped.StreamFeedItemModel;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.model.dto.DonationHistoryDto;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.MainPresenter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.MainRouter;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.router.ScreenTag;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.DonateFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.GamecodeFragment;
+import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.HistoryFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.ProfileFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.fragment.StreamFeedFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.view.interfaces.MainView;
@@ -36,7 +38,8 @@ import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 public class MainActivity extends AppCompatActivity implements MainView, MainRouter,
         ProfileFragment.OnFragmentInteractionListener,
-        StreamFeedFragment.OnListFragmentInteractionListener {
+        StreamFeedFragment.OnListFragmentInteractionListener,
+        HistoryFragment.OnListFragmentInteractionListener{
 
 
     private final String TAG = getClass().getSimpleName();
@@ -44,11 +47,12 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     private final String TAG_DONATE = "TAG_DONATE";
     private final String TAG_GAMECODE = "TAG_GAMECODE";
     private final String TAG_PROFILE = "TAG_PROFILE";
+    private final String TAG_HISTORY = "TAG_HISTORY";
 
     static final private int DONATE_FOR_RESULT = 0;
 
     private FragmentManager fragmentManager;
-    Fragment searchFragment, gamecodeFragment, profileFragment;
+    Fragment searchFragment, gamecodeFragment, profileFragment, historyFragment;
     private BottomNavigationView navigation;
 
     private MainPresenter presenter;
@@ -90,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
         searchFragment = StreamFeedFragment.newInstance();
         gamecodeFragment = GamecodeFragment.newInstance();
         profileFragment = ProfileFragment.newInstance();
+        historyFragment = new HistoryFragment();
 
         fragmentManager = getSupportFragmentManager();
 
@@ -179,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
                 case TAG_DONATE:
                     navigation.setSelectedItemId(R.id.navigation_search);
                     break;
+                case TAG_HISTORY:
                 case TAG_PROFILE:
                     navigation.setSelectedItemId(R.id.navigation_profile);
                     break;
@@ -237,6 +243,11 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
             }
             case QR_SCANNER: {
                 changeFragment(gamecodeFragment, TAG_GAMECODE, true);
+                break;
+            }
+            case HISTORY_LIST: {
+                changeFragment(historyFragment, TAG_HISTORY, true);
+                break;
             }
         }
     }
@@ -264,6 +275,11 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
         } else {
             goToStreamPage(item.getId(), item.getDescription(), item.getStreamer_id());
         }
+    }
+
+    @Override
+    public void onListFragmentInteraction(DonationHistoryDto item) {
+        goToScreen(ScreenTag.HISTORY_LIST);
     }
 
     @Override

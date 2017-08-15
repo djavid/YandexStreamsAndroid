@@ -10,7 +10,7 @@ public class ProfileUseCase implements ProfileInteractor {
 
     private DataRepository dataRepository;
 
-    public ProfileUseCase(DataRepository dataRepository) {
+    private ProfileUseCase(DataRepository dataRepository) {
         this.dataRepository = dataRepository;
     }
 

@@ -50,6 +50,7 @@ public class StreamFeedPresenterImpl
 
     @Override
     public void onStop() {
+        if (!disposable.isDisposed()) disposable.dispose();
     }
 
     @Override
@@ -92,10 +93,7 @@ public class StreamFeedPresenterImpl
                     } else {
                         getInstanceState().getData().addAll(list);
                     }
-                },
-                (throwable) -> {
-                    getView().showError(ThrowableToStringIdConverter.convert(throwable));
-                });
+                }, error -> getView().showError(ThrowableToStringIdConverter.convert(error)));
     }
 
     @Override
