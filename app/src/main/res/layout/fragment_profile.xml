@@ -18,19 +18,19 @@
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorToolbarBottomLine"/>
+            android:background="@color/colorToolbarBottomLine" />
 
         <TextView
             android:id="@+id/tv_toolbar"
+            fontPath="minecraft.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/v_toolbar_line"
-            android:textSize="24sp"
             android:layout_marginBottom="6dp"
+            android:text="@string/title_profile_toolbar"
             android:textAlignment="center"
             android:textColor="@color/colorToolbarName"
-            fontPath="minecraft.ttf"
-            android:text="@string/title_profile_toolbar"/>
+            android:textSize="24sp" />
 
         <FrameLayout
             android:id="@+id/fl_toolbar_buttons"
@@ -41,25 +41,25 @@
 
             <TextView
                 android:id="@+id/tv_toolbar_login"
-                android:visibility="visible"
+                fontPath="minecraft.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16.7sp"
+                android:text="@string/title_profile_login"
                 android:textAlignment="center"
                 android:textColor="@color/colorToolbarBalance"
-                fontPath="minecraft.ttf"
-                android:text="@string/title_profile_login" />
+                android:textSize="16.7sp"
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/tv_toolbar_balance"
+                fontPath="minecraft.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
-                android:textSize="16.7sp"
+                android:text="3 467.00 руб."
                 android:textAlignment="center"
                 android:textColor="@color/colorToolbarBalance"
-                fontPath="minecraft.ttf"
-                android:text="3 467.00 руб." />
+                android:textSize="16.7sp"
+                android:visibility="invisible" />
 
         </FrameLayout>
 
@@ -69,8 +69,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/fl_toolbar_buttons"
-            android:layout_marginBottom="6dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="6dp"
             android:src="@drawable/group" />
 
     </RelativeLayout>

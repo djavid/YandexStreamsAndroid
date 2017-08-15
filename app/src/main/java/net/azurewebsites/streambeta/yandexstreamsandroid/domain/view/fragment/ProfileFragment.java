@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,6 +39,9 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
     LinearLayout ll_profile_buttons;
     @BindView(R.id.rl_history_button)
     RelativeLayout rl_history_button;
+    @BindView(R.id.iv_toolbar_avatar)
+    ImageView iv_toolbar_avatar;
+
 
     ProfilePresenter presenter;
     private OnFragmentInteractionListener mListener;
@@ -115,6 +119,7 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
         tv_toolbar_balance.setVisibility(GONE);
         tv_toolbar_login.setVisibility(VISIBLE);
         rl_history_button.setVisibility(GONE);
+        iv_toolbar_avatar.setImageResource(R.drawable.group);
     }
 
     @Override
@@ -123,6 +128,7 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
         tv_toolbar_balance.setVisibility(VISIBLE);
         tv_toolbar_login.setVisibility(GONE);
         rl_history_button.setVisibility(VISIBLE);
+        iv_toolbar_avatar.setImageResource(R.drawable.ava);
     }
 
     @Override
