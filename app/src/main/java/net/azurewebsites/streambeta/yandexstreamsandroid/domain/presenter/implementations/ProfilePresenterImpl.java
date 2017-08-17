@@ -54,6 +54,13 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileView, MainRouter,
 
     @Override
     public boolean isAuthorised() {
+        if (!App.getAppInstance().getApiClient().isAuthorized()) {
+            if (!App.getAppInstance().getPreferencesWrapper().getAuthToken("yandex_money").isEmpty()) {
+                App.getAppInstance().getApiClient().setAccessToken(App.getAppInstance()
+                        .getPreferencesWrapper().getAuthToken("yandex_money"));
+            }
+        }
+
         return App.getAppInstance().getApiClient().isAuthorized();
         //return !App.getAppInstance().getPreferencesWrapper().getAuthToken("yandex_money").isEmpty();
     }

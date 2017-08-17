@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Route
     @Override
     public void onStart() {
         super.onStart();
+        System.out.println("onStart LoginActivity");
         presenter = App.getAppInstance().getPresenterProvider().getPresenter("login", LoginPresenter.class);
         presenter.setView(this);
         presenter.setRouter(this);
@@ -88,7 +89,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView, Route
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        presenter.saveInstanceState(new LoginPresenterInstanceState(webView.getOriginalUrl()));
+        System.out.println("onSaveInstanceState - " + webView.getUrl());
+        presenter.saveInstanceState(new LoginPresenterInstanceState(webView.getUrl()));
         super.onSaveInstanceState(savedInstanceState);
     }
 

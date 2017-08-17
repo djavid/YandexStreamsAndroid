@@ -14,9 +14,6 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.util.ThrowableToStringI
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-/**
- * Created by Tetawex on 23.07.2017.
- */
 
 public class LoginPresenterImpl
         extends BasePresenter<LoginView, Router, LoginPresenterInstanceState>
@@ -38,6 +35,7 @@ public class LoginPresenterImpl
 
     @Override
     public void onStart() {
+        System.out.println("onStart LoginPresenterImpl");
         if (getInstanceState() != null)
             getView().loadUrl(getInstanceState().getCurrentUrl());
         else {
