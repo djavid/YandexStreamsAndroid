@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     static final private int DONATE_FOR_RESULT = 0;
 
     private FragmentManager fragmentManager;
-    Fragment searchFragment, gamecodeFragment, profileFragment, historyFragment;
+    Fragment searchFragment, gamecodeFragment, profileFragment;
     private BottomNavigationView navigation;
 
     private MainPresenter presenter;
@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
         searchFragment = StreamFeedFragment.newInstance();
         gamecodeFragment = GamecodeFragment.newInstance();
         profileFragment = ProfileFragment.newInstance();
-        historyFragment = new HistoryFragment();
 
         fragmentManager = getSupportFragmentManager();
 
@@ -245,10 +244,6 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
                 changeFragment(gamecodeFragment, TAG_GAMECODE, true);
                 break;
             }
-            case HISTORY_LIST: {
-                changeFragment(historyFragment, TAG_HISTORY, true);
-                break;
-            }
         }
     }
 
@@ -261,6 +256,12 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     public void goToStreamPage(long streamId, String streamDesc, String streamerId) {
         Fragment donateFragment = DonateFragment.newInstance(streamId, streamDesc, streamerId);
         changeFragment(donateFragment, TAG_DONATE, true);
+    }
+
+    @Override
+    public void goToDonationListPage(String account_id) {
+        HistoryFragment historyFragment = HistoryFragment.newInstance(account_id);
+        changeFragment(historyFragment, TAG_HISTORY, true);
     }
 
     @Override
@@ -298,6 +299,13 @@ public class MainActivity extends AppCompatActivity implements MainView, MainRou
     }
 
     public boolean isYandexAuthorised() {
+        if (!App.getAppInstance().getApiClient().isAuthorized()) {
+            if (!App.getAppInstance().getPreferencesWrapper().getAuthToken("yandex_money").isEmpty()) {
+                App.getAppInstance().getApiClient().setAccessToken(App.getAppInstance()
+                        .getPreferencesWrapper().getAuthToken("yandex_money"));
+            }
+        }
+
         return App.getAppInstance().getApiClient().isAuthorized();
     }
 }

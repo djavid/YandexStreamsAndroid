@@ -37,8 +37,31 @@ public class HistoryFragment extends BaseFragment implements HistoryView {
     private HistoryRecyclerAdapter recyclerAdapter;
     private OnListFragmentInteractionListener mListener;
 
+    private static final String ARG_ACCOUNT_ID = "id";
+    private String account_id;
 
-    public HistoryFragment() { }
+
+    public HistoryFragment() {
+
+    }
+
+    public static HistoryFragment newInstance(String account_id) {
+        HistoryFragment historyFragment = new HistoryFragment();
+
+        Bundle args = new Bundle();
+        args.putString(ARG_ACCOUNT_ID, account_id);
+
+        historyFragment.setArguments(args);
+        return historyFragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            account_id = getArguments().getString(ARG_ACCOUNT_ID);
+        }
+    }
 
     @Override
     public View setupView(View view) {
@@ -63,8 +86,8 @@ public class HistoryFragment extends BaseFragment implements HistoryView {
 
     @Override
     public void loadData() {
-        presenter.loadDonationsHistory(
-                App.getAppInstance().getPreferencesWrapper().getDeviceId("device_id"));
+        //presenter.loadDonationsHistory(account_id);
+        presenter.loadDonationsHistory(App.getAppInstance().getPreferencesWrapper().getDeviceId("device_id"));
     }
 
     @Override

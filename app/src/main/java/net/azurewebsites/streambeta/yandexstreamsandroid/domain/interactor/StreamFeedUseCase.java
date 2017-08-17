@@ -57,7 +57,7 @@ public class StreamFeedUseCase implements StreamFeedInteractor {
                         StreamFeedItemModel model = new StreamFeedItemModel();
                         model.setId(dto.getId());
                         model.setDescription(dto.getChannel().getStatus());
-                        model.setName(dto.getChannel().getName());
+                        model.setName(dto.getChannel().getDisplayName());
                         model.setImageUrl(dto.getChannel().getLogo());
                         model.setStreamer_id(Long.toString(dto.getChannel().getId()));
                         model.setAudience(dto.getViewers());

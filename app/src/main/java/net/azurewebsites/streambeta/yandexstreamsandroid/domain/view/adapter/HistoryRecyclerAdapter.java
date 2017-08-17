@@ -29,11 +29,13 @@ public class HistoryRecyclerAdapter extends BaseRecyclerAdapter<DonationHistoryD
 
     @Override
     protected void bindSingleItem(ViewHoler viewHolder, DonationHistoryDto item) {
-        viewHolder.history_stream_name.setText("Test");
-        viewHolder.history_stream_amount.setText(item.getAmount());
-        viewHolder.history_stream_date.setText(item.getDate().toString());
+        viewHolder.history_stream_name.setText(item.getChannel());
+        viewHolder.history_stream_amount.setText(String.format(context.getString(
+                R.string.string_profile_balance), item.getAmount()));
+        if (item.getDate() != null)
+            viewHolder.history_stream_date.setText(item.getDate().toString());
         GlideUtils.loadImageIntoView(context, viewHolder.history_stream_avatar,
-                "https://www.yastream.win/api/images?id=90&type=logo", R.color.colorToolbarBackground);
+                item.getStream_logo(), R.color.colorToolbarBackground);
 
         viewHolder.view.setOnClickListener(v -> {
             if (mListener != null) {
@@ -66,8 +68,8 @@ public class HistoryRecyclerAdapter extends BaseRecyclerAdapter<DonationHistoryD
 
         ViewHoler(View itemView) {
             super(itemView);
-            this.view = itemView;
-            ButterKnife.bind(this.view);
+            view = itemView;
+            ButterKnife.bind(this, view);
         }
     }
 }

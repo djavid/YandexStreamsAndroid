@@ -69,6 +69,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileView, MainRouter,
                     if (getView() != null) {
                         getView().hideProgressbar();
                         getView().setBalance(response.balance);
+                        getView().saveAccountInfo(response);
                     }
                 }, error -> {
                     if (getView() != null) {

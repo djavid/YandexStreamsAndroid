@@ -60,6 +60,8 @@ public class HistoryPresenterImpl extends BasePresenter<HistoryView, MainRouter,
                     }
                 }, error -> {
                     if (getView() != null)
+                        getView().hideProgressbar();
+                        error.printStackTrace();
                         getView().showError(ThrowableToStringIdConverter.convert(error));
                 });
 

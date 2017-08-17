@@ -9,5 +9,6 @@ import net.azurewebsites.streambeta.yandexstreamsandroid.core.Router;
 public interface MainRouter extends Router {
     void goToScreen(ScreenTag screenTag);
     void goToStreamPage(long streamId, String streamName, String streamerId);
+    void goToDonationListPage(String account_id);
     ScreenTag getCurrentScreen();
 }

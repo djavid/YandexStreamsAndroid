@@ -48,6 +48,18 @@ public class DonationHistoryDto {
     @SerializedName("sender")
     @Expose
     private String sender;
+    @SerializedName("stream_name")
+    @Expose
+    private String stream_name;
+    @SerializedName("channel")
+    @Expose
+    private String channel;
+    @SerializedName("stream_logo")
+    @Expose
+    private String stream_logo;
+    @SerializedName("stream_preview")
+    @Expose
+    private String stream_preview;
 
 
     public Object getUser() {
@@ -113,8 +125,8 @@ public class DonationHistoryDto {
         this.voiceData = voiceData;
     }
 
-    public Integer getAmount() {
-        return amount;
+    public float getAmount() {
+        return amount / 100f;
     }
     public void setAmount(Integer amount) {
         this.amount = amount;
@@ -141,4 +153,31 @@ public class DonationHistoryDto {
         this.sender = sender;
     }
 
+    public String getStream_name() {
+        return stream_name;
+    }
+    public void setStream_name(String stream_name) {
+        this.stream_name = stream_name;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
+    public String getStream_logo() {
+        return stream_logo;
+    }
+    public void setStream_logo(String stream_logo) {
+        this.stream_logo = stream_logo;
+    }
+
+    public String getStream_preview() {
+        return stream_preview;
+    }
+    public void setStream_preview(String stream_preview) {
+        this.stream_preview = stream_preview;
+    }
 }

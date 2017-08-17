@@ -10,6 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yandex.money.api.methods.wallet.AccountInfo;
+
 import net.azurewebsites.streambeta.yandexstreamsandroid.R;
 import net.azurewebsites.streambeta.yandexstreamsandroid.core.view.BaseFragment;
 import net.azurewebsites.streambeta.yandexstreamsandroid.domain.presenter.interfaces.ProfilePresenter;
@@ -45,6 +47,7 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
 
     ProfilePresenter presenter;
     private OnFragmentInteractionListener mListener;
+    AccountInfo accountInfo;
 
 
     public ProfileFragment() { }
@@ -174,8 +177,12 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
 
     public void onHistoryButtonPressed(View v) {
         if (presenter.isAuthorised()) {
-            ((MainRouter) getActivity()).goToScreen(ScreenTag.HISTORY_LIST);
+            ((MainRouter) getActivity()).goToDonationListPage(accountInfo.account);
         }
     }
 
+    @Override
+    public void saveAccountInfo(AccountInfo accountInfo) {
+        this.accountInfo = accountInfo;
+    }
 }

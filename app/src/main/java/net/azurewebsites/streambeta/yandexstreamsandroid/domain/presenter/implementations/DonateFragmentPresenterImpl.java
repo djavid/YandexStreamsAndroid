@@ -196,6 +196,7 @@ public class DonateFragmentPresenterImpl
                             }
                         }, error -> {
                             if (getView() != null) {
+                                error.printStackTrace();
                                 getView().showError(ThrowableToStringIdConverter.convert(error));
                             }
                         }
@@ -227,6 +228,7 @@ public class DonateFragmentPresenterImpl
                 }, error -> {
                     if (getView() != null) {
                         getView().hideProgressbar();
+                        error.printStackTrace();
                         getView().showError(ThrowableToStringIdConverter.convert(error));
                     }
                 });
@@ -234,7 +236,7 @@ public class DonateFragmentPresenterImpl
 
     @Override
     public boolean isAuthorised() {
-        return !App.getAppInstance().getPreferencesWrapper().getAuthToken("yandex_money").isEmpty();
+        return App.getAppInstance().getApiClient().isAuthorized();
     }
 
     @Override
